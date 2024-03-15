@@ -76,6 +76,12 @@ dependencies {
 		implementation(libs.koin)
 		implementation(libs.koin.compose)
 
+		// coil
+		implementation(libs.coil.compose)
+
+		// glide
+		implementation(libs.glide)
+
 
 
 
