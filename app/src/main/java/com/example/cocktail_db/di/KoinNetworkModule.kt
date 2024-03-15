@@ -2,7 +2,6 @@ package com.example.cocktail_db.di
 
 import com.example.cocktail_db.core.API_COCKTAILDB_URL
 import com.example.cocktail_db.data.remote.CocktailDbApi
-import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
