@@ -8,11 +8,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 val networkModule = module {
-		factory { provideCocktailDbApi(retrofit = get()) }
-		single { provideCocktailDbRetrofit(okHttpClient = get()) }
+		factory<CocktailDbApi> { provideCocktailDbApi(retrofit = get()) }
+		single<Retrofit> { provideCocktailDbRetrofit() }
 }
 
-fun provideCocktailDbRetrofit(okHttpClient: OkHttpClient): Retrofit {
+fun provideCocktailDbRetrofit(): Retrofit {
 		return Retrofit.Builder()
 				.baseUrl(API_COCKTAILDB_URL)
 				// .client(okHttpClient)
