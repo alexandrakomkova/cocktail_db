@@ -36,15 +36,23 @@ val Typography = Typography(
     )
     */
 )
+val cocktailId = TextStyle(
+		fontFamily = FontFamily.Monospace,
+		textAlign = TextAlign.Left,
+		color = MediumGray,
+		fontSize = 94.sp,
+		fontWeight = FontWeight.Bold,
+)
+
 val cocktailName = TextStyle(
-		fontSize = 24.sp,
+		fontSize = 36.sp,
 		fontFamily = FontFamily.Monospace,
 		fontWeight = FontWeight.Bold,
 		color = Color.Black,
 		textAlign = TextAlign.Left,
 )
 val cocktailInfo = TextStyle(
-		fontSize = 14.sp,
+		fontSize = 16.sp,
 		fontFamily = FontFamily.Monospace,
 		color = Color.Black,
 		textAlign = TextAlign.Left,
