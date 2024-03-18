@@ -8,6 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cocktail_db.core.Resource
 import com.example.cocktail_db.domain.use_case.CocktailUseCases
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.core.component.KoinComponent
@@ -18,6 +21,11 @@ class RandomCocktailViewModel(
 ): ViewModel(), KoinComponent {
 		private val _state = mutableStateOf(RandomCocktailState())
 		val state: State<RandomCocktailState> = _state
+
+
+		private val _isRefreshing = MutableStateFlow(false)
+		val isRefreshing: StateFlow<Boolean>
+				get() = _isRefreshing.asStateFlow()
 
 		init { getRandomCocktail() }
 
@@ -30,5 +38,9 @@ class RandomCocktailViewModel(
 								}
 						}
 				}.launchIn(viewModelScope)
+		}
+
+		fun refresh() {
+				getRandomCocktail()
 		}
 }

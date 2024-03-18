@@ -6,4 +6,9 @@ data class RandomCocktailState(
 		val isLoading: Boolean = false,
 		val cocktails: List<Cocktail> = emptyList(),
 		val error: String = ""
-)
+) {
+		enum class LoadingType {
+				INITIAL_LOAD, PULL_REFRESH,
+		}
+
+}

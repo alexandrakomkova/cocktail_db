@@ -1,20 +1,28 @@
 package com.example.cocktail_db.presentation
 
+import android.os.Build
+import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +33,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import com.example.cocktail_db.domain.model.Cocktail
@@ -34,12 +43,22 @@ import com.example.cocktail_db.ui.theme.cocktailInfo
 import com.example.cocktail_db.ui.theme.cocktailName
 
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RandomCocktailScreen(
+		viewModel: RandomCocktailViewModel,
 		state: RandomCocktailState
 ) {
+
+		val refreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
+		val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.refresh() })
+
 		Box(
-				modifier = Modifier.fillMaxSize()
+				modifier = Modifier
+						.fillMaxSize()
+						.pullRefresh(pullRefreshState, true)
+						.verticalScroll(rememberScrollState())
 		) {
 				Column(
 						verticalArrangement = Arrangement.Center,
@@ -65,6 +84,8 @@ fun RandomCocktailScreen(
 						}
 
 				}
+
+				PullRefreshIndicator(refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
 		}
 }
 
@@ -148,7 +169,8 @@ fun OverlayText(text1: String, text2: String) {
 				Divider(modifier = Modifier
 						.height(48.dp)
 						.width(5.dp)
-						.padding(vertical = 10.dp),
+						.padding(vertical = 10.dp)
+						.align(Alignment.TopStart),
 						thickness = 1.dp,
 						color = Purple40)
 
@@ -158,13 +180,15 @@ fun OverlayText(text1: String, text2: String) {
 						modifier = Modifier.align(Alignment.TopStart)
 				)
 
+
 				Text(
 						text = text2,
 						style = cocktailName,
 						maxLines = 2,
 						modifier = Modifier
 								.align(Alignment.TopStart)
-								.width(200.dp)
+								.fillMaxWidth()
+								//.width(200.dp)
 								.padding(top = 25.dp)
 				)
 		}

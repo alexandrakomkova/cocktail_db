@@ -6,12 +6,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.cocktail_db.presentation.RandomCocktailScreen
 import com.example.cocktail_db.presentation.RandomCocktailViewModel
 import com.example.cocktail_db.ui.theme.Cocktail_dbTheme
@@ -30,8 +33,7 @@ class MainActivity : ComponentActivity() {
 								) {
 										val viewModel: RandomCocktailViewModel = koinViewModel()
 
-										RandomCocktailScreen(state = viewModel.state.value)
-										// RandomCocktailScreen()
+										RandomCocktailScreen(viewModel = viewModel, state = viewModel.state.value)
 								}
 						}
 				}
