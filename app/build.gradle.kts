@@ -84,10 +84,11 @@ dependencies {
 		// coil
 		implementation(libs.coil.compose)
 
-		// glide
-		implementation(libs.glide)
+		// datastore
+		implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 
+		implementation("androidx.activity:activity-ktx:1.8.2")
 
 
 }

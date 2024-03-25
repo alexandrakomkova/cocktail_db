@@ -1,4 +1,4 @@
-package com.example.cocktail_db.presentation
+package com.example.cocktail_db.presentation.random_cocktail_screen
 
 import android.os.Build
 import androidx.annotation.RequiresExtension
