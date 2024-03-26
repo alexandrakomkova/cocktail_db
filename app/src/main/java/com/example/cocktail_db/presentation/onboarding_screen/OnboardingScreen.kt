@@ -22,20 +22,18 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.cocktail_db.presentation.random_cocktail_screen.RandomCocktailScreen
-import com.example.cocktail_db.presentation.random_cocktail_screen.RandomCocktailViewModel
 
 @Composable
-fun OnBoardScreen(
-		viewModel: RandomCocktailViewModel
+fun OnboardingScreen(
+		onOnboarded: () -> Unit
 ) {
 
 		val onboardPages = onboardPagesList
@@ -47,8 +45,10 @@ fun OnBoardScreen(
 
 				OnBoardImageView(
 						modifier = Modifier
-								.weight(1f)
-								.fillMaxWidth(),
+								.weight(3f)
+								.padding(horizontal = 30.dp, vertical = 60.dp)
+								.align(Alignment.CenterHorizontally)
+								.clip(RoundedCornerShape(15.dp)),
 						currentPage = onboardPages[currentPage.intValue]
 				)
 
@@ -64,10 +64,10 @@ fun OnBoardScreen(
 								.align(Alignment.CenterHorizontally)
 								.padding(top = 16.dp, bottom = 15.dp),
 						currentPage = currentPage.intValue,
-						noOfPages = onboardPages.size
-				) {
-						currentPage.intValue++
-				}
+						noOfPages = onboardPages.size,
+						onNextClicked = { currentPage.intValue++ },
+						onOnboarded = onOnboarded
+				)
 
 				TabSelector(
 						onboardPages = onboardPages,
@@ -130,15 +130,18 @@ fun OnBoardDetails(
 
 @Composable
 fun OnBoardNavButton(
-		modifier: Modifier = Modifier, currentPage: Int, noOfPages: Int, onNextClicked: () -> Unit
+		modifier: Modifier = Modifier,
+		currentPage: Int,
+		noOfPages: Int,
+		onNextClicked: () -> Unit,
+		onOnboarded: () -> Unit
 ) {
 		Button(
 				onClick = {
 						if (currentPage < noOfPages - 1) {
 								onNextClicked()
 						} else {
-
-								// RandomCocktailScreen(viewModel = viewModel, state = viewModel.state)
+								onOnboarded()
 						}
 				},
 				modifier = modifier
@@ -153,6 +156,7 @@ fun TabSelector(onboardPages: List<OnboardPage>, currentPage: Int, onTabSelected
 				selectedTabIndex = currentPage,
 				modifier = Modifier
 						.fillMaxWidth()
+						.padding(bottom = 55.dp)
 						.background(MaterialTheme.colorScheme.primary)
 
 		) {

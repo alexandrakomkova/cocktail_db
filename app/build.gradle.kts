@@ -60,6 +60,7 @@ dependencies {
 		implementation(libs.androidx.ui.tooling.preview)
 		implementation(libs.androidx.material3)
 		implementation(libs.androidx.lifecycle.runtime.compose)
+		implementation(libs.androidx.navigation.compose)
 		// implementation(libs.androidx.material3.android)
 		testImplementation(libs.junit)
 		androidTestImplementation(libs.androidx.junit)
@@ -89,6 +90,7 @@ dependencies {
 
 
 		implementation("androidx.activity:activity-ktx:1.8.2")
+		implementation("androidx.compose.runtime:runtime-livedata:1.6.4")
 
 
 }
