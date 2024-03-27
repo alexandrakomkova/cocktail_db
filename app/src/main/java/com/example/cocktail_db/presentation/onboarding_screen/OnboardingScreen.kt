@@ -2,7 +2,6 @@ package com.example.cocktail_db.presentation.onboarding_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,8 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +31,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.cocktail_db.ui.theme.Purple40
+import com.example.cocktail_db.ui.theme.cocktailInfo
+import com.example.cocktail_db.ui.theme.cocktailName
+
 
 @Composable
 fun OnboardingScreen(
@@ -40,13 +45,15 @@ fun OnboardingScreen(
 		val currentPage = remember { mutableIntStateOf(0) }
 
 		Column(
-				modifier = Modifier.fillMaxSize()
+				modifier = Modifier
+						.fillMaxSize()
+						.background(Color.White)
 		) {
 
 				OnBoardImageView(
 						modifier = Modifier
-								.weight(3f)
-								.padding(horizontal = 30.dp, vertical = 60.dp)
+								.weight(4f)
+								.padding(horizontal = 30.dp, vertical = 30.dp)
 								.align(Alignment.CenterHorizontally)
 								.clip(RoundedCornerShape(15.dp)),
 						currentPage = onboardPages[currentPage.intValue]
@@ -54,27 +61,28 @@ fun OnboardingScreen(
 
 				OnBoardDetails(
 						modifier = Modifier
-								.weight(1f)
+								.weight(3f)
 								.padding(16.dp),
 						currentPage = onboardPages[currentPage.intValue]
 				)
 
 				OnBoardNavButton(
 						modifier = Modifier
+								.weight(1f)
 								.align(Alignment.CenterHorizontally)
-								.padding(top = 16.dp, bottom = 15.dp),
+								.padding(bottom = 15.dp),
 						currentPage = currentPage.intValue,
 						noOfPages = onboardPages.size,
 						onNextClicked = { currentPage.intValue++ },
 						onOnboarded = onOnboarded
 				)
 
-				TabSelector(
+				/* TabSelector(
 						onboardPages = onboardPages,
 						currentPage = currentPage.intValue
 				) { index ->
 						currentPage.intValue = index
-				}
+				}*/
 		}
 }
 
@@ -110,18 +118,18 @@ fun OnBoardDetails(
 ) {
 		Column(
 				modifier = modifier,
-				verticalArrangement = Arrangement.Bottom
+
 		) {
 				Text(
 						text = currentPage.title,
-						style = MaterialTheme.typography.displaySmall,
+						style = cocktailName,
 						textAlign = TextAlign.Center,
 						modifier = Modifier.fillMaxWidth()
 				)
 				Spacer(modifier = Modifier.height(16.dp))
 				Text(
 						text = currentPage.description,
-						style = MaterialTheme.typography.bodyMedium,
+						style = cocktailInfo,
 						textAlign = TextAlign.Center,
 						modifier = Modifier.fillMaxWidth()
 				)
@@ -144,9 +152,17 @@ fun OnBoardNavButton(
 								onOnboarded()
 						}
 				},
-				modifier = modifier
+				modifier = modifier.width(150.dp).height(60.dp).padding(bottom = 45.dp),
+				colors = ButtonDefaults.buttonColors(
+						backgroundColor = Purple40
+				),
+				shape = RoundedCornerShape(25.dp)
 		) {
-				Text(text = if (currentPage < noOfPages - 1) "Next" else "Get Started")
+				Text(
+						text = if (currentPage < noOfPages - 1) "Next" else "Get Started",
+						style = cocktailInfo,
+						color = Color.White
+				)
 		}
 }
 
@@ -156,23 +172,27 @@ fun TabSelector(onboardPages: List<OnboardPage>, currentPage: Int, onTabSelected
 				selectedTabIndex = currentPage,
 				modifier = Modifier
 						.fillMaxWidth()
-						.padding(bottom = 55.dp)
-						.background(MaterialTheme.colorScheme.primary)
-
+						.padding(bottom = 55.dp),
+				contentColor = MaterialTheme.colorScheme.onPrimary,
+				backgroundColor = Purple40
 		) {
 				onboardPages.forEachIndexed { index, _ ->
-						Tab(selected = index == currentPage, onClick = {
-								onTabSelected(index)
-						}, modifier = Modifier.padding(16.dp), content = {
-								Box(
-										modifier = Modifier
-												.size(8.dp)
-												.background(
-														color = if (index == currentPage) MaterialTheme.colorScheme.onPrimary
-														else Color.LightGray, shape = RoundedCornerShape(4.dp)
-												)
-								)
-						})
+						Tab(
+								selected = index == currentPage,
+								onClick = { onTabSelected(index) },
+								modifier = Modifier.padding(16.dp),
+								content = {
+										Box(
+												modifier = Modifier
+														.size(8.dp)
+														.background(
+																color = if (index == currentPage) MaterialTheme.colorScheme.onPrimary
+																else Color.LightGray,
+																shape = RoundedCornerShape(4.dp)
+														)
+										)
+								}
+						)
 				}
 		}
 }
