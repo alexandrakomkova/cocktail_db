@@ -67,6 +67,7 @@ fun RandomCocktailScreen(
 						.pullRefresh(pullRefreshState, true)
 						.verticalScroll(rememberScrollState())
 		) {
+
 				Column(
 						verticalArrangement = Arrangement.Center,
 						horizontalAlignment = Alignment.CenterHorizontally
