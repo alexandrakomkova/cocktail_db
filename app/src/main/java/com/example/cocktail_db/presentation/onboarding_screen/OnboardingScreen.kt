@@ -9,14 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
@@ -76,13 +72,6 @@ fun OnboardingScreen(
 						onNextClicked = { currentPage.intValue++ },
 						onOnboarded = onOnboarded
 				)
-
-				/* TabSelector(
-						onboardPages = onboardPages,
-						currentPage = currentPage.intValue
-				) { index ->
-						currentPage.intValue = index
-				}*/
 		}
 }
 
@@ -166,33 +155,3 @@ fun OnBoardNavButton(
 		}
 }
 
-@Composable
-fun TabSelector(onboardPages: List<OnboardPage>, currentPage: Int, onTabSelected: (Int) -> Unit) {
-		TabRow(
-				selectedTabIndex = currentPage,
-				modifier = Modifier
-						.fillMaxWidth()
-						.padding(bottom = 55.dp),
-				contentColor = MaterialTheme.colorScheme.onPrimary,
-				backgroundColor = Purple40
-		) {
-				onboardPages.forEachIndexed { index, _ ->
-						Tab(
-								selected = index == currentPage,
-								onClick = { onTabSelected(index) },
-								modifier = Modifier.padding(16.dp),
-								content = {
-										Box(
-												modifier = Modifier
-														.size(8.dp)
-														.background(
-																color = if (index == currentPage) MaterialTheme.colorScheme.onPrimary
-																else Color.LightGray,
-																shape = RoundedCornerShape(4.dp)
-														)
-										)
-								}
-						)
-				}
-		}
-}
