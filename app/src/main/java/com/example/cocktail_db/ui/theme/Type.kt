@@ -51,9 +51,16 @@ val cocktailName = TextStyle(
 		color = Color.Black,
 		textAlign = TextAlign.Left,
 )
-val cocktailInfo = TextStyle(
+val cocktailInfoBlack = TextStyle(
 		fontSize = 16.sp,
 		fontFamily = FontFamily.Monospace,
 		color = Color.Black,
+		textAlign = TextAlign.Left,
+)
+
+val cocktailInfoGrey = TextStyle(
+		fontSize = 16.sp,
+		fontFamily = FontFamily.Monospace,
+		color = Color.Gray,
 		textAlign = TextAlign.Left,
 )

@@ -3,17 +3,25 @@ package com.example.cocktail_db.presentation.random_cocktail_screen
 import android.os.Build
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.icons.Icons
@@ -36,17 +44,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import com.example.cocktail_db.domain.model.Cocktail
+import com.example.cocktail_db.ui.theme.Purple40
 import com.example.cocktail_db.ui.theme.cocktailId
-import com.example.cocktail_db.ui.theme.cocktailInfo
+import com.example.cocktail_db.ui.theme.cocktailInfoBlack
+import com.example.cocktail_db.ui.theme.cocktailInfoGrey
 import com.example.cocktail_db.ui.theme.cocktailName
 
 
@@ -61,39 +68,54 @@ fun RandomCocktailScreen(
 		val refreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
 		val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.refresh() })
 
-		Box(
+		Column(
 				modifier = Modifier
 						.fillMaxSize()
 						.pullRefresh(pullRefreshState, true)
-						.verticalScroll(rememberScrollState())
+						.verticalScroll(rememberScrollState()),
+				verticalArrangement = Arrangement.Center,
+				horizontalAlignment = Alignment.CenterHorizontally
 		) {
 
-				Column(
-						verticalArrangement = Arrangement.Center,
-						horizontalAlignment = Alignment.CenterHorizontally
-				) {
+				if (state.cocktails.isEmpty()) state.cocktails.lastIndex.toString() else CocktailCard(state.cocktails[0])
 
-						if (state.cocktails.isEmpty()) state.cocktails.lastIndex.toString() else CocktailCard(state.cocktails[0])
+				if(state.error.isNotBlank()) {
+						Text(
+								text = state.error,
+								color = Color.Red,
+								textAlign = TextAlign.Center,
+								modifier = Modifier
+										.fillMaxWidth()
+										.align(Alignment.CenterHorizontally)
+										.padding(
+												start = 20.dp,
+												end = 20.dp,
+												top = 170.dp,
+												bottom = 70.dp
+										)
+						)
 
-						if(state.error.isNotBlank()) {
+						Button(
+								onClick = { viewModel.refresh() },
+								modifier = Modifier,
+								colors = ButtonDefaults.buttonColors(
+										backgroundColor = Purple40
+								),
+								shape = RoundedCornerShape(25.dp)
+						) {
 								Text(
-										text = state.error,
-										color = Color.Red,
-										textAlign = TextAlign.Center,
-										modifier = Modifier
-												.fillMaxWidth()
-												.padding(horizontal = 20.dp)
-												.align(Alignment.CenterHorizontally)
+										text = "Retry",
+										style = cocktailInfoBlack,
+										color = Color.White
 								)
 						}
-
-						if(state.isLoading) {
-								CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-						}
-
 				}
 
-				PullRefreshIndicator(refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
+				if(state.isLoading) {
+						CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+				}
+
+				PullRefreshIndicator(refreshing, pullRefreshState)
 		}
 }
 
@@ -120,33 +142,36 @@ fun CocktailCard(cocktail: Cocktail) {
 						cocktail.cocktailType?.let {
 								Text(
 										text = it,
-										style = TextStyle(
-												fontSize = 16.sp,
-												fontFamily = FontFamily.Monospace,
-												color = Color.Gray,
-												textAlign = TextAlign.Left,
-										),
+										style = cocktailInfoGrey,
 										modifier = Modifier.padding(bottom = 20.dp)
 								)
 						}
 						Text(
 								text = "Category: ${cocktail.category}",
-								style = cocktailInfo
+								style = cocktailInfoBlack
 						)
 						Divider(modifier = Modifier
 								.width(15.dp)
 								.padding(vertical = 10.dp), thickness = 1.dp, color = Color.Gray)
 						Text(
 								text = "Glass type: ${cocktail.glassType}",
-								style = cocktailInfo
+								style = cocktailInfoBlack
 						)
 						Divider(modifier = Modifier
 								.width(15.dp)
 								.padding(vertical = 10.dp), thickness = 1.dp, color = Color.Gray)
 						Text(
 								text = "Glass type: ${cocktail.glassType}",
-								style = cocktailInfo
+								style = cocktailInfoBlack
 						)
+						Divider(modifier = Modifier
+								.width(15.dp)
+								.padding(vertical = 10.dp), thickness = 1.dp, color = Color.Gray)
+						Text(
+								text = "Ingredients:",
+								style = cocktailInfoBlack
+						)
+						IngredientsList(cocktail = cocktail)
 				}
 		}
 
@@ -182,20 +207,11 @@ fun OverlayText(text1: String, text2: String) {
 				modifier = Modifier.fillMaxWidth(),
 				contentAlignment = Alignment.Center
 		) {
-//				Divider(modifier = Modifier
-//						.height(48.dp)
-//						.width(5.dp)
-//						.padding(vertical = 10.dp)
-//						.align(Alignment.TopStart),
-//						thickness = 1.dp,
-//						color = Purple40)
-
 				Text(
 						text = text1,
 						style = cocktailId,
 						modifier = Modifier.align(Alignment.TopStart)
 				)
-
 
 				Text(
 						text = text2,
@@ -204,7 +220,6 @@ fun OverlayText(text1: String, text2: String) {
 						modifier = Modifier
 								.align(Alignment.TopStart)
 								.fillMaxWidth()
-								//.width(200.dp)
 								.padding(top = 5.dp)
 				)
 		}
@@ -227,6 +242,39 @@ fun FavouriteButton() {
 								contentDescription = "favourite_btn",
 								tint = if (checked.value) Color.Red else Color.Black,
 						)
+				}
+		}
+}
+
+@Composable
+fun IngredientsList(
+		cocktail: Cocktail
+) {
+		LazyColumn(
+				modifier = Modifier
+						.fillMaxWidth()
+						.padding(top = 15.dp)
+						.height(400.dp)
+		) {
+				val mapIngredientWithMeasure = cocktail.ingredientsList.associateWith { key -> cocktail.measuresList[cocktail.ingredientsList.indexOf(key)] ?: "to taste" }
+
+				items(cocktail.ingredientsList) {ingredient ->
+						Row(
+								modifier = Modifier
+										.fillMaxWidth()
+										.padding(bottom = 5.dp),
+								horizontalArrangement = Arrangement.SpaceBetween,
+								verticalAlignment = Alignment.CenterVertically
+						) {
+								Text(
+										text = "${ingredient}: ",
+										style = cocktailInfoBlack
+								)
+								Text(
+										text = "${mapIngredientWithMeasure[ingredient]}",
+										style = cocktailInfoGrey
+								)
+						}
 				}
 		}
 }

@@ -32,7 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.cocktail_db.ui.theme.Purple40
-import com.example.cocktail_db.ui.theme.cocktailInfo
+import com.example.cocktail_db.ui.theme.cocktailInfoBlack
 import com.example.cocktail_db.ui.theme.cocktailName
 
 
@@ -129,7 +129,7 @@ fun OnBoardDetails(
 				Spacer(modifier = Modifier.height(16.dp))
 				Text(
 						text = currentPage.description,
-						style = cocktailInfo,
+						style = cocktailInfoBlack,
 						textAlign = TextAlign.Center,
 						modifier = Modifier.fillMaxWidth()
 				)
@@ -160,7 +160,7 @@ fun OnBoardNavButton(
 		) {
 				Text(
 						text = if (currentPage < noOfPages - 1) "Next" else "Get Started",
-						style = cocktailInfo,
+						style = cocktailInfoBlack,
 						color = Color.White
 				)
 		}

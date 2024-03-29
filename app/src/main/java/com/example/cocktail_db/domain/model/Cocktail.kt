@@ -7,10 +7,6 @@ data class Cocktail(
 		val category: String,
 		val image: String,
 		val cocktailType: String?,
-		val ingredient1: Any?,
-		val ingredient2: Any?,
-		val ingredient3: Any?,
-		val ingredient4: Any?,
-		val ingredient5: Any?,
-		val ingredient6: Any?
+		val ingredientsList: List<Any?>,
+		val measuresList: List<Any?>
 )
