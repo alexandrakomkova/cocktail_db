@@ -40,6 +40,17 @@ class RandomCocktailViewModel(
 				}.launchIn(viewModelScope)
 		}
 
+		private fun getCocktailById(cocktailId: Int) {
+				cocktailUseCases.getCocktailByIdUseCase(cocktailId).onEach { result ->
+						when(result) {
+								is Resource.Loading -> { _state.value = RandomCocktailState(isLoading = true) }
+								is Resource.Success -> { _state.value = RandomCocktailState(cocktails = result.data ?: emptyList()) }
+								is Resource.Error -> { _state.value = RandomCocktailState(error = result.message ?: "An unexpected error occurred")
+								}
+						}
+				}.launchIn(viewModelScope)
+		}
+
 		fun refresh() {
 				getRandomCocktail()
 		}

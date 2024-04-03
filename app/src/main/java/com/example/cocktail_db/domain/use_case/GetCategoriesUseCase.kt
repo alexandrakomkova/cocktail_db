@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
 import java.io.IOException
 
-class GetCategoryUseCase(
+class GetCategoriesUseCase(
 		private val repository: CocktailDbRepository
 ): KoinComponent {
 		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)

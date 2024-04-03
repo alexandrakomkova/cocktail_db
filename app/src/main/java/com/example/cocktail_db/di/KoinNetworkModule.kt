@@ -1,6 +1,6 @@
 package com.example.cocktail_db.di
 
-import com.example.cocktail_db.core.API_COCKTAILDB_URL
+import com.example.cocktail_db.core.Constants
 import com.example.cocktail_db.data.remote.CocktailDbApi
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -13,7 +13,7 @@ val networkModule = module {
 
 fun provideCocktailDbRetrofit(): Retrofit {
 		return Retrofit.Builder()
-				.baseUrl(API_COCKTAILDB_URL)
+				.baseUrl(Constants.API_COCKTAILDB_URL)
 				// .client(okHttpClient)
 				.addConverterFactory(MoshiConverterFactory.create())
 				.build()

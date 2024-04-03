@@ -1,7 +1,7 @@
 package com.example.cocktail_db.di
 
 import com.example.cocktail_db.domain.use_case.CocktailUseCases
-import com.example.cocktail_db.domain.use_case.GetCategoryUseCase
+import com.example.cocktail_db.domain.use_case.GetCategoriesUseCase
 import com.example.cocktail_db.domain.use_case.GetCocktailByIdUseCase
 import com.example.cocktail_db.domain.use_case.GetCocktailsByCategoryUseCase
 import com.example.cocktail_db.domain.use_case.GetRandomCocktailUseCase
@@ -11,7 +11,7 @@ val domainModule = module {
 		factory<CocktailUseCases> {
 				CocktailUseCases(
 						getRandomCocktailUseCase = get(),
-						getCategoryUseCase = get(),
+						getCategoriesUseCase = get(),
 						getCocktailsByCategoryUseCase = get(),
 						getCocktailByIdUseCase = get()
 				)
@@ -21,8 +21,8 @@ val domainModule = module {
 				GetRandomCocktailUseCase(repository = get())
 		}
 
-		factory<GetCategoryUseCase> {
-				GetCategoryUseCase(repository = get())
+		factory<GetCategoriesUseCase> {
+				GetCategoriesUseCase(repository = get())
 		}
 
 		factory<GetCocktailsByCategoryUseCase> {
