@@ -4,6 +4,6 @@ import com.squareup.moshi.Json
 
 data class CategoryListDto(
 
-    @Json(name="drinks")
+    @field:Json(name="drinks")
     val categories: List<CategoryDto>
 )

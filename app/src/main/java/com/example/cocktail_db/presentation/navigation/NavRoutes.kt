@@ -8,13 +8,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.SavedStateHandle
-import com.example.cocktail_db.core.OnboardingNavKey
+import androidx.navigation.NavController
+import com.example.cocktail_db.core.Constants
+import com.example.cocktail_db.presentation.category.CategoryListScreen
+import com.example.cocktail_db.presentation.category.CategoryViewModel
 import com.example.cocktail_db.presentation.onboarding_screen.OnboardingResult
 import com.example.cocktail_db.presentation.onboarding_screen.OnboardingScreen
 import com.example.cocktail_db.presentation.onboarding_screen.OnboardingState
 import com.example.cocktail_db.presentation.onboarding_screen.OnboardingStorage
 import com.example.cocktail_db.presentation.random_cocktail_screen.RandomCocktailScreen
 import com.example.cocktail_db.presentation.random_cocktail_screen.RandomCocktailViewModel
+import com.example.cocktail_db.presentation.short_info_cocktail.CocktailsByCategoryScreen
+import com.example.cocktail_db.presentation.short_info_cocktail.ShortInfoCocktailViewModel
+import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
@@ -26,7 +32,7 @@ fun RandomCocktailRoute(
 		onOnboardingCancelled: () -> Unit,
 ) {
 		val onboardingState by onboardingStorage.onboardingState.collectAsState()
-		val onboardingResult by savedStateHandle.getLiveData<OnboardingResult>(OnboardingNavKey).observeAsState()
+		val onboardingResult by savedStateHandle.getLiveData<OnboardingResult>(Constants.ONBOARDING_NAV_KEY).observeAsState()
 		val viewModel: RandomCocktailViewModel = koinViewModel()
 
 		when (onboardingState) {
@@ -56,4 +62,21 @@ fun OnboardingRoute(
 						popBackStack()
 				},
 		)
+}
+
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+@Composable
+fun CategoriesRoute(
+		navController: NavController
+) {
+		val viewModel: CategoryViewModel = koinViewModel()
+
+		CategoryListScreen(viewModel = viewModel, navController = navController)
+}
+
+@Composable
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+fun CocktailsByCategoryRoute() {
+		val viewModel: ShortInfoCocktailViewModel = getViewModel()
+		CocktailsByCategoryScreen(viewModel = viewModel)
 }

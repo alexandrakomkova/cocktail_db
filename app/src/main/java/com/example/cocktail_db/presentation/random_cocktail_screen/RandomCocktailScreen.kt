@@ -16,10 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.icons.Icons
@@ -42,13 +39,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import com.example.cocktail_db.domain.model.Cocktail
-import com.example.cocktail_db.ui.theme.Purple40
+import com.example.cocktail_db.presentation.core.ErrorTextRetryBtn
 import com.example.cocktail_db.ui.theme.cocktailId
 import com.example.cocktail_db.ui.theme.cocktailInfoBlack
 import com.example.cocktail_db.ui.theme.cocktailInfoGrey
@@ -78,35 +74,7 @@ fun RandomCocktailScreen(
 				if (state.cocktails.isEmpty()) state.cocktails.lastIndex.toString() else CocktailCard(state.cocktails[0])
 
 				if(state.error.isNotBlank()) {
-						Text(
-								text = state.error,
-								color = Color.Red,
-								textAlign = TextAlign.Center,
-								modifier = Modifier
-										.fillMaxWidth()
-										.align(Alignment.CenterHorizontally)
-										.padding(
-												start = 20.dp,
-												end = 20.dp,
-												top = 170.dp,
-												bottom = 70.dp
-										)
-						)
-
-						Button(
-								onClick = { viewModel.refresh() },
-								modifier = Modifier,
-								colors = ButtonDefaults.buttonColors(
-										backgroundColor = Purple40
-								),
-								shape = RoundedCornerShape(25.dp)
-						) {
-								Text(
-										text = "Retry",
-										style = cocktailInfoBlack,
-										color = Color.White
-								)
-						}
+						ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
 				}
 
 				if(state.isLoading) {

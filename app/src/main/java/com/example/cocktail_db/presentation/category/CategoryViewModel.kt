@@ -32,4 +32,8 @@ class CategoryViewModel(
 				}.launchIn(viewModelScope)
 		}
 
+		fun refresh() {
+				getCategories()
+		}
+
 }

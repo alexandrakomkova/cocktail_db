@@ -13,7 +13,7 @@ val networkModule = module {
 
 fun provideCocktailDbRetrofit(): Retrofit {
 		return Retrofit.Builder()
-				.baseUrl(Constants.API_COCKTAILDB_URL)
+				.baseUrl(Constants.API_COCKTAIL_DB_URL)
 				// .client(okHttpClient)
 				.addConverterFactory(MoshiConverterFactory.create())
 				.build()

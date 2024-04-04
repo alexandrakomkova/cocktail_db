@@ -15,6 +15,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cocktail_db.core.Constants
+import com.example.cocktail_db.presentation.navigation.CategoriesRoute
+import com.example.cocktail_db.presentation.navigation.CocktailsByCategoryRoute
 import com.example.cocktail_db.presentation.navigation.OnboardingRoute
 import com.example.cocktail_db.presentation.navigation.RandomCocktailRoute
 import com.example.cocktail_db.presentation.onboarding_screen.OnboardingResult
@@ -42,7 +44,7 @@ class MainActivity : ComponentActivity() {
 										val navController = rememberNavController()
 										NavHost(
 												navController = navController,
-												startDestination = Constants.RANDOM_COCKTAIL_NAV_KEY,
+												startDestination = Constants.CATEGORIES_NAV_KEY,
 										) {
 												composable(Constants.RANDOM_COCKTAIL_NAV_KEY) { backStackEntry ->
 														RandomCocktailRoute(
@@ -67,6 +69,18 @@ class MainActivity : ComponentActivity() {
 																onboardingStorage = storage,
 																popBackStack = { navController.popBackStack() },
 														)
+												}
+
+
+												composable(Constants.CATEGORIES_NAV_KEY) {
+														CategoriesRoute(navController)
+												}
+												composable(Constants.HOME_NAV_KEY) {}
+												composable(Constants.FAVOURITE_NAV_KEY) {}
+												composable(
+														Constants.COCKTAIL_BY_CATEGORY_NAV_KEY + "/{" + Constants.COCKTAIL_CATEGORY_NAME_PARAM + "}"
+												) {
+														CocktailsByCategoryRoute()
 												}
 										}
 								}
