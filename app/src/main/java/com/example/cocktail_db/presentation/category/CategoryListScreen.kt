@@ -40,7 +40,7 @@ fun CategoryListScreen(
 				if(state.categories.isEmpty()) {
 						state.categories.lastIndex
 				} else {
-						CategoriesList(state = state, navController = navController)
+						CategoriesListScreen(state = state, navController = navController)
 				}
 				if(state.error.isNotBlank()) {
 						ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
@@ -53,11 +53,15 @@ fun CategoryListScreen(
 }
 
 @Composable
-fun CategoriesList(
+fun CategoriesListScreen(
 		state: CategoryState,
 		navController: NavController
 ) {
-		Column {
+		Column(
+				modifier = Modifier
+						.fillMaxSize()
+						.padding(20.dp)
+		) {
 				Text(
 						text = "Categories",
 						style = cocktailName,
@@ -66,14 +70,14 @@ fun CategoriesList(
 				LazyColumn(
 						modifier = Modifier
 								.fillMaxSize()
-								.padding(top = 10.dp)
+								.padding(top = 15.dp)
 				) {
 
 						items(state.categories) { category ->
 								CategoryListItem(
 										category = category,
 										onItemClick = {
-												navController.navigate(Constants.COCKTAIL_BY_CATEGORY_NAV_KEY + "/{" + Constants.COCKTAIL_CATEGORY_NAME_PARAM + "}")
+												navController.navigate(Constants.COCKTAIL_BY_CATEGORY_NAV_KEY + "/${category.categoryName}")
 										}
 								)
 						}

@@ -2,7 +2,6 @@ package com.example.cocktail_db.presentation.random_cocktail_screen
 
 import android.os.Build
 import androidx.annotation.RequiresExtension
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,12 +37,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImagePainter
-import coil.compose.SubcomposeAsyncImage
 import com.example.cocktail_db.domain.model.Cocktail
+import com.example.cocktail_db.presentation.core.AsyncCocktailImage
 import com.example.cocktail_db.presentation.core.ErrorTextRetryBtn
 import com.example.cocktail_db.ui.theme.cocktailId
 import com.example.cocktail_db.ui.theme.cocktailInfoBlack
@@ -89,7 +86,15 @@ fun RandomCocktailScreen(
 fun CocktailCard(cocktail: Cocktail) {
 
 		//img
-		Box { CocktailImage(cocktail.image) }
+		Box {
+				AsyncCocktailImage(
+						imageUrl = cocktail.image,
+						contentDesc = cocktail.name,
+						modifier = Modifier
+								.fillMaxWidth()
+								.clip(MaterialTheme.shapes.medium)
+				)
+		}
 
 		// all info
 		Box(
@@ -138,31 +143,6 @@ fun CocktailCard(cocktail: Cocktail) {
 								style = cocktailInfoBlack
 						)
 						IngredientsList(cocktail = cocktail)
-				}
-		}
-
-
-}
-
-@Composable
-fun CocktailImage(imageUrl: String) {
-
-		SubcomposeAsyncImage(
-				model = imageUrl,
-				contentDescription = "cocktail_img"
-		) {
-				val state = painter.state
-				if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
-						CircularProgressIndicator()
-				} else {
-						Image(
-								painter = painter,
-								contentDescription = null,
-								contentScale = ContentScale.Crop,
-								modifier = Modifier
-										.fillMaxWidth()
-										.clip(MaterialTheme.shapes.medium)
-						)
 				}
 		}
 }

@@ -64,3 +64,10 @@ val cocktailInfoGrey = TextStyle(
 		color = Color.Gray,
 		textAlign = TextAlign.Left,
 )
+
+val cocktailInfoWhite = TextStyle(
+		fontSize = 16.sp,
+		fontFamily = FontFamily.Monospace,
+		color = Color.White,
+		textAlign = TextAlign.Left,
+)

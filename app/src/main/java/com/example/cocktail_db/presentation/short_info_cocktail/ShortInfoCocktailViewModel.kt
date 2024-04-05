@@ -1,6 +1,7 @@
 package com.example.cocktail_db.presentation.short_info_cocktail
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresExtension
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -29,10 +30,11 @@ class ShortInfoCocktailViewModel(
 		}
 
 		private fun getCocktailsByCategory(categoryName: String) {
+				Log.d("getCocktailsByCategory", categoryName)
 				cocktailUseCases.getCocktailsByCategoryUseCase(categoryName).onEach { result ->
 						when(result) {
 								is Resource.Loading -> { _state.value = ShortInfoCocktailState(isLoading = true) }
-								is Resource.Success -> { _state.value = ShortInfoCocktailState(shortInfoCocktails = result.data ?: emptyList()) }
+								is Resource.Success -> { _state.value = ShortInfoCocktailState(categoryName = categoryName, shortInfoCocktails = result.data ?: emptyList()) }
 								is Resource.Error -> { _state.value = ShortInfoCocktailState(error = result.message ?: "An unexpected error occurred")
 								}
 						}
