@@ -6,7 +6,7 @@ object Constants {
 		const val ONBOARDING_NAV_KEY = "onboarding_screen"
 		const val RANDOM_COCKTAIL_NAV_KEY = "random_cocktail_screen"
 		const val CATEGORIES_NAV_KEY = "categories_screen"
-		const val FAVOURITE_NAV_KEY = "favourite_screen"
+		const val FAVOURITE_NAV_KEY = "favourites_screen"
 		const val HOME_NAV_KEY = "home_screen"
 		const val COCKTAIL_BY_CATEGORY_NAV_KEY = "cocktails_by_category_screen"
 

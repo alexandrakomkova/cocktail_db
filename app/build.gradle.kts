@@ -91,6 +91,4 @@ dependencies {
 
 		implementation("androidx.activity:activity-ktx:1.8.2")
 		implementation("androidx.compose.runtime:runtime-livedata:1.6.4")
-
-
 }
