@@ -33,10 +33,7 @@ fun BottomBarNavHost(
 								toOnboarding = {
 										navController.navigate(Constants.ONBOARDING_NAV_KEY)
 								},
-								onOnboardingCancelled = {
-										mainActivity.finish()
-
-								}
+								onOnboardingCancelled = { mainActivity.finish() }
 						)
 				}
 				composable(Constants.ONBOARDING_NAV_KEY) {
@@ -53,15 +50,12 @@ fun BottomBarNavHost(
 				}
 
 
-				composable(Constants.CATEGORIES_NAV_KEY) {
-						CategoriesRoute(navController)
-				}
+				composable(Constants.CATEGORIES_NAV_KEY) { CategoriesRoute(navController) }
 				composable(Constants.HOME_NAV_KEY) {}
-				composable(Constants.FAVOURITE_NAV_KEY) {}
+				composable(Constants.FAVOURITE_NAV_KEY) { FavouritesRoute(navController) }
+
 				composable(
 						Constants.COCKTAIL_BY_CATEGORY_NAV_KEY + "/{" + Constants.COCKTAIL_CATEGORY_NAME_PARAM + "}"
-				) {
-						CocktailsByCategoryRoute()
-				}
+				) { CocktailsByCategoryRoute() }
 		}
 }

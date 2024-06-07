@@ -12,6 +12,8 @@ import androidx.navigation.NavController
 import com.example.cocktail_db.core.Constants
 import com.example.cocktail_db.presentation.category.CategoryListScreen
 import com.example.cocktail_db.presentation.category.CategoryViewModel
+import com.example.cocktail_db.presentation.favourites.FavouritesScreen
+import com.example.cocktail_db.presentation.favourites.FavouritesViewModel
 import com.example.cocktail_db.presentation.onboarding_screen.OnboardingResult
 import com.example.cocktail_db.presentation.onboarding_screen.OnboardingScreen
 import com.example.cocktail_db.presentation.onboarding_screen.OnboardingState
@@ -62,6 +64,16 @@ fun OnboardingRoute(
 						popBackStack()
 				},
 		)
+}
+
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+@Composable
+fun FavouritesRoute(
+		navController: NavController
+) {
+		val viewModel: FavouritesViewModel = koinViewModel()
+
+		FavouritesScreen(viewModel = viewModel, navController = navController)
 }
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)

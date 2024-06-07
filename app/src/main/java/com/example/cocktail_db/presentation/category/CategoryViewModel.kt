@@ -24,10 +24,9 @@ class CategoryViewModel(
 		private fun getCategories() {
 				cocktailUseCases.getCategoriesUseCase().onEach { result ->
 						when(result) {
+								is Resource.Error -> { _state.value = CategoryState(error = result.message ?: "An unexpected error occurred") }
 								is Resource.Loading -> { _state.value = CategoryState(isLoading = true) }
 								is Resource.Success -> { _state.value = CategoryState(categories = result.data ?: emptyList()) }
-								is Resource.Error -> { _state.value = CategoryState(error = result.message ?: "An unexpected error occurred")
-								}
 						}
 				}.launchIn(viewModelScope)
 		}
