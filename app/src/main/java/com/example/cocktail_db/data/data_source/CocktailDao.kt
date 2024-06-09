@@ -5,18 +5,18 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
-import com.example.cocktail_db.domain.model.Cocktail
+import com.example.cocktail_db.domain.model.FavCocktail
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CocktailDao {
-		@Query("select * from favourite_cocktails")
-		fun getFavourites(): Flow<List<Cocktail>>
+		@Query("select * from favcocktail")
+		fun getFavourites(): Flow<List<FavCocktail>>
 
-		@Query("select * from favourite_cocktails where id = :id")
-		suspend fun getFavCocktailById(id: Int): Cocktail?
+		@Query("select * from favcocktail where id = :id")
+		suspend fun getFavCocktailById(id: Int): FavCocktail?
 		@Insert(onConflict = REPLACE)
-		suspend fun insertFavCocktail(cocktail: Cocktail)
+		suspend fun insertFavCocktail(cocktail: FavCocktail)
 		@Delete
-		suspend fun deleteFavCocktail(cocktail: Cocktail)
+		suspend fun deleteFavCocktail(cocktail: FavCocktail)
 }
