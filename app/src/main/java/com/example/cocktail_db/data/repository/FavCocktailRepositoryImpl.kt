@@ -9,18 +9,18 @@ class FavCocktailRepositoryImpl(
 		private val dao: CocktailDao
 ): FavCocktailRepository {
 		override fun getFavourites(): Flow<List<Cocktail>> {
-				TODO("Not yet implemented")
+				return dao.getFavourites()
 		}
 
 		override suspend fun getFavCocktailById(id: Int): Cocktail? {
-				TODO("Not yet implemented")
+				return dao.getFavCocktailById(id)
 		}
 
 		override suspend fun insertFavCocktail(cocktail: Cocktail) {
-				TODO("Not yet implemented")
+				dao.insertFavCocktail(cocktail)
 		}
 
 		override suspend fun deleteFavCocktail(cocktail: Cocktail) {
-				TODO("Not yet implemented")
+				dao.deleteFavCocktail(cocktail)
 		}
 }
