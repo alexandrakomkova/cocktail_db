@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cocktail_db.core.Resource
-import com.example.cocktail_db.domain.use_case.CocktailUseCases
+import com.example.cocktail_db.domain.use_case.cocktail_use_case.CocktailUseCases
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.core.component.KoinComponent

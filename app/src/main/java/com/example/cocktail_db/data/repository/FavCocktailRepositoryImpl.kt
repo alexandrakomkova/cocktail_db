@@ -1,19 +1,18 @@
 package com.example.cocktail_db.data.repository
 
 import com.example.cocktail_db.data.data_source.CocktailDao
-import com.example.cocktail_db.domain.model.Cocktail
 import com.example.cocktail_db.domain.model.FavCocktail
 import com.example.cocktail_db.domain.repository.FavCocktailRepository
-import kotlinx.coroutines.flow.Flow
+import org.koin.core.component.KoinComponent
 
 class FavCocktailRepositoryImpl(
 		private val dao: CocktailDao
-): FavCocktailRepository {
-		override fun getFavourites(): Flow<List<FavCocktail>> {
+): FavCocktailRepository, KoinComponent {
+		override suspend fun getFavourites(): List<FavCocktail> {
 				return dao.getFavourites()
 		}
 
-		override suspend fun getFavCocktailById(id: Int): FavCocktail? {
+		override suspend fun getFavCocktailById(id: Int): FavCocktail {
 				return dao.getFavCocktailById(id)
 		}
 

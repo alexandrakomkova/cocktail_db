@@ -15,5 +15,3 @@ data class FavCocktail(
 		val ingredientsList: List<Any?>,
 		val measuresList: List<Any?>
 )
-
-class InvalidFavCocktailException(message: String): Exception(message)
