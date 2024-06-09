@@ -13,7 +13,14 @@ class KoinApp: Application() {
 
 				startKoin {
 						androidContext(this@KoinApp)
-						modules(listOf(appModule, dataModule, domainModule, networkModule))
+						modules(
+								listOf(
+									appModule,
+									dataModuleCocktailDb, dataModuleFavCocktail,
+									domainModuleCocktailDb, domainModuleFavCocktails,
+									networkModule
+								)
+						)
 				}
 		}
 }

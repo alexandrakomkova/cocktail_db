@@ -31,7 +31,7 @@ val appModule = module {
 		}
 
 		viewModel<FavouritesViewModel> {
-				FavouritesViewModel()
+				FavouritesViewModel(favCocktailRepo = get())
 		}
 
 }
