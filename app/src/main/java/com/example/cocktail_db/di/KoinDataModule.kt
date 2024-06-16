@@ -1,8 +1,8 @@
 package com.example.cocktail_db.di
 
 import androidx.room.Room
+import com.example.cocktail_db.data.data_source.FavCocktailDatabase
 import com.example.cocktail_db.data.repository.CocktailDbRepositoryImpl
-import com.example.cocktail_db.data.repository.FavCocktailDatabase
 import com.example.cocktail_db.data.repository.FavCocktailRepositoryImpl
 import com.example.cocktail_db.domain.repository.CocktailDbRepository
 import com.example.cocktail_db.domain.repository.FavCocktailRepository
@@ -17,6 +17,15 @@ val dataModuleCocktailDb = module {
 		} bind CocktailDbRepository::class
 
 		single { OnboardingStorage() }
+		single {
+				Room
+						.databaseBuilder(context = get(), FavCocktailDatabase::class.java, "favcocktail_db")
+						.build()
+		}
+
+		single {
+				FavCocktailRepositoryImpl(database = get())
+		} bind FavCocktailRepository::class
 }
 
 val dataModuleFavCocktail = module {
@@ -28,6 +37,6 @@ val dataModuleFavCocktail = module {
 		}
 
 		single {
-				FavCocktailRepositoryImpl(dao = get())
+				FavCocktailRepositoryImpl(database = get())
 		} bind FavCocktailRepository::class
 }

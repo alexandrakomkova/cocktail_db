@@ -16,8 +16,8 @@ class KoinApp: Application() {
 						modules(
 								listOf(
 									appModule,
-									dataModuleCocktailDb, dataModuleFavCocktail,
-									domainModuleCocktailDb, domainModuleFavCocktails,
+									dataModuleCocktailDb, // dataModuleFavCocktail,
+									domainModuleCocktailDb, //domainModuleFavCocktails,
 									networkModule
 								)
 						)

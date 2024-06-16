@@ -39,6 +39,28 @@ val domainModuleCocktailDb = module {
 		factory<GetCocktailByIdUseCase> {
 				GetCocktailByIdUseCase(repository = get())
 		}
+		// Favourites cocktails
+		factory<FavCocktailUseCases> {
+				FavCocktailUseCases(
+						getFavCocktailsUseCase = get(),
+						getFavCocktailByIdUseCase = get(),
+						addFavCocktailUseCase = get(),
+						deleteFavCocktailUseCase = get()
+				)
+		}
+
+		factory<GetFavCocktailsUseCase> {
+				GetFavCocktailsUseCase(repository = get())
+		}
+		factory<GetFavCocktailByIdUseCase> {
+				GetFavCocktailByIdUseCase(repository = get())
+		}
+		factory<AddFavCocktailUseCase> {
+				AddFavCocktailUseCase(repository = get())
+		}
+		factory<DeleteFavCocktailUseCase> {
+				DeleteFavCocktailUseCase(repository = get())
+		}
 
 }
 

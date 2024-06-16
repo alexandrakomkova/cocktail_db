@@ -1,7 +1,5 @@
 package com.example.cocktail_db.domain.use_case.fav_cocktails_use_case
 
-import android.os.Build
-import androidx.annotation.RequiresExtension
 import com.example.cocktail_db.core.Resource
 import com.example.cocktail_db.domain.model.FavCocktail
 import com.example.cocktail_db.domain.repository.FavCocktailRepository
@@ -12,8 +10,6 @@ import org.koin.core.component.KoinComponent
 class GetFavCocktailsUseCase(
 		private val repository: FavCocktailRepository
 ): KoinComponent {
-
-		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 		operator fun invoke(): Flow<Resource<List<FavCocktail>>> = flow {
 
 				try {

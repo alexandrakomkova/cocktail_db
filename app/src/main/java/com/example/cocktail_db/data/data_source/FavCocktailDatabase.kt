@@ -1,8 +1,7 @@
-package com.example.cocktail_db.data.repository
+package com.example.cocktail_db.data.data_source
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.cocktail_db.data.data_source.CocktailDao
 import com.example.cocktail_db.domain.model.FavCocktail
 
 
@@ -13,7 +12,8 @@ import com.example.cocktail_db.domain.model.FavCocktail
 
 
 abstract class FavCocktailDatabase: RoomDatabase() {
-		abstract val cocktailDao: CocktailDao
+		//abstract val cocktailDao: CocktailDao
+		abstract fun favCocktailDao(): CocktailDao
 
 		companion object {
 				const val DATABASE_NAME = "favourite_cocktails_db"

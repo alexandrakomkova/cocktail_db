@@ -16,12 +16,12 @@ class GetFavCocktailByIdUseCase(
 		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 		operator fun invoke(cocktailId: Int): Flow<Resource<FavCocktail>> = flow {
 
-				try {
-						emit(Resource.Loading())
-						val favCocktail = repository.getFavCocktailById(cocktailId)
-						emit(Resource.Success(favCocktail))
-				} catch (e: Exception) {
-						emit(Resource.Error(message = e.localizedMessage ?: "An unexpected error occurred"))
-				}
+//				try {
+//						emit(Resource.Loading())
+//						val favCocktail = repository.getFavCocktailById(cocktailId)
+//						emit(Resource.Success(favCocktail))
+//				} catch (e: Exception) {
+//						emit(Resource.Error(message = e.localizedMessage ?: "An unexpected error occurred"))
+//				}
 		}
 }

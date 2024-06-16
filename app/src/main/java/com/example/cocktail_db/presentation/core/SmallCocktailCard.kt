@@ -9,22 +9,32 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.cocktail_db.R
 import com.example.cocktail_db.ui.theme.cocktailInfoWhite
 
-
+@Preview
 @Composable
 fun SmallCocktailCard(
-		imageUrl: String,
-		title: String,
+		imageUrl: String = "",
+		title: String = "Pina colada",
 		modifier: Modifier = Modifier
 ) {
+
+		val checked = remember { mutableStateOf(false) }
+
 		Card(
 				modifier = modifier.fillMaxWidth(),
 				shape = RoundedCornerShape(15.dp),
@@ -33,6 +43,7 @@ fun SmallCocktailCard(
 				Box(
 						modifier = Modifier.height(200.dp)
 				) {
+
 						AsyncCocktailImage(
 								imageUrl = imageUrl,
 								contentDesc = title,
@@ -49,6 +60,19 @@ fun SmallCocktailCard(
 												startY = 300f
 										))
 						)
+
+						IconToggleButton (
+								modifier = Modifier.align(Alignment.TopEnd),
+								checked = checked.value,
+								onCheckedChange = { checked.value = it }
+						) {
+								Icon(
+										painter = painterResource(id =
+										if (checked.value ) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
+										),
+										contentDescription = "add_to_favourite",
+								)
+						}
 
 						Box(
 								modifier = Modifier
