@@ -28,7 +28,13 @@ fun CocktailDbNavHost(
 
 				composable(route = Screen.Home.route) {
 						HomeScreen(
-
+								onCategoryClick = {
+										navController.navigate(
+												Screen.CategoryDetail.createRoute(
+														categoryName = it.categoryName
+												)
+										)
+								}
 						)
 				}
 
