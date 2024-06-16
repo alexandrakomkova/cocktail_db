@@ -12,7 +12,7 @@ sealed class Screen(
 		data object Home : Screen("home")
 
 		// category list
-		data object CategoryList : Screen("category_list")
+		//data object CategoryList : Screen("category_list")
 
 		// cocktails in selected category
 		data object CategoryDetail : Screen(
@@ -25,7 +25,7 @@ sealed class Screen(
 		}
 
 		// favourite cocktails list
-		data object FavCocktailList : Screen("fav_cocktail_list")
+		//data object FavCocktailList : Screen("fav_cocktail_list")
 
 		// cocktail details
 		data object CocktailDetail : Screen(

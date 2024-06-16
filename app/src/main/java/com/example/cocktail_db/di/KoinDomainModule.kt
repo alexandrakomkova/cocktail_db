@@ -1,6 +1,6 @@
 package com.example.cocktail_db.di
 
-import com.example.cocktail_db.domain.use_case.cocktail_use_case.CocktailUseCases
+import com.example.cocktail_db.domain.use_case.cocktail_use_case.CocktailDbUseCases
 import com.example.cocktail_db.domain.use_case.cocktail_use_case.GetCategoriesUseCase
 import com.example.cocktail_db.domain.use_case.cocktail_use_case.GetCocktailByIdUseCase
 import com.example.cocktail_db.domain.use_case.cocktail_use_case.GetCocktailsByCategoryUseCase
@@ -15,8 +15,8 @@ import org.koin.dsl.module
 val domainModuleCocktailDb = module {
 
 		// CocktailDb
-		factory<CocktailUseCases> {
-				CocktailUseCases(
+		factory<CocktailDbUseCases> {
+				CocktailDbUseCases(
 						getRandomCocktailUseCase = get(),
 						getCategoriesUseCase = get(),
 						getCocktailsByCategoryUseCase = get(),
