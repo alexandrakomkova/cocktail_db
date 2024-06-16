@@ -1,6 +1,8 @@
 package com.example.cocktail_db.feature
 
 import android.app.Activity
+import android.os.Build
+import androidx.annotation.RequiresExtension
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -9,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cocktail_db.feature.home.HomeScreen
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun CocktailDbApp() {
 		val navController = rememberNavController()
@@ -17,6 +20,7 @@ fun CocktailDbApp() {
 		)
 }
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun CocktailDbNavHost(
 		navController: NavHostController
