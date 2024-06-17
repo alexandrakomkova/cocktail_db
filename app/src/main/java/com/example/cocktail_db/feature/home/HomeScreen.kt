@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.cocktail_db.R
 import com.example.cocktail_db.domain.model.Category
+import com.example.cocktail_db.domain.model.Cocktail
 import com.example.cocktail_db.feature.category_list.CategoryListScreen
 import com.example.cocktail_db.feature.favourite_cocktail.FavouriteListScreen
 import com.example.cocktail_db.ui.theme.Purple40
@@ -45,7 +46,8 @@ enum class CocktailDbPage(
 fun HomeScreen(
 		modifier: Modifier = Modifier,
 		pages: Array<CocktailDbPage> = CocktailDbPage.entries.toTypedArray(),
-		onCategoryClick: (Category) -> Unit
+		onCategoryClick: (Category) -> Unit,
+		onCocktailClick: (Cocktail) -> Unit
 ) {
 		val pagerState = rememberPagerState(pageCount = { pages.size })
 
@@ -57,7 +59,8 @@ fun HomeScreen(
 						pagerState = pagerState,
 						pages = pages,
 						modifier = Modifier.padding(top = contentPadding.calculateTopPadding()),
-						onCategoryClick = onCategoryClick
+						onCategoryClick = onCategoryClick,
+						onCocktailClick = onCocktailClick
 				)
 
 		}
@@ -72,7 +75,8 @@ fun HomePagerScreen(
 		pagerState: PagerState,
 		pages: Array<CocktailDbPage>,
 		modifier: Modifier = Modifier,
-		onCategoryClick: (Category) -> Unit
+		onCategoryClick: (Category) -> Unit,
+		onCocktailClick: (Cocktail) -> Unit
 ) {
 		Column(modifier) {
 				val coroutineScope = rememberCoroutineScope()
@@ -105,6 +109,12 @@ fun HomePagerScreen(
 						verticalAlignment = Alignment.Top
 				) { index ->
 						when(pages[index]) {
+								CocktailDbPage.FAVOURITE_LIST -> {
+										FavouriteListScreen(
+												modifier = Modifier.fillMaxSize(),
+												onCocktailClick = onCocktailClick
+										)
+								}
 								CocktailDbPage.CATEGORY_LIST -> {
 										CategoryListScreen(
 												modifier = Modifier.fillMaxSize(),
@@ -114,9 +124,7 @@ fun HomePagerScreen(
 								CocktailDbPage.HOME -> {
 										CachedCocktailListScreen(modifier = Modifier.fillMaxSize())
 								}
-								CocktailDbPage.FAVOURITE_LIST -> {
-										FavouriteListScreen(modifier = Modifier.fillMaxSize())
-								}
+
 						}
 
 				}

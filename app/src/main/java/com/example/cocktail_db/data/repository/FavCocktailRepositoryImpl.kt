@@ -6,11 +6,10 @@ import com.example.cocktail_db.domain.repository.FavCocktailRepository
 import org.koin.core.component.KoinComponent
 
 class FavCocktailRepositoryImpl(
-		// private val dao: CocktailDao
 		private val database: FavCocktailDatabase
 ): FavCocktailRepository, KoinComponent {
 
-		private val dao = database.favCocktailDao()
+		private val dao = database.getFavCocktailDao()
 		override suspend fun getFavourites(): List<FavCocktail> { return dao.getFavourites() }
 
 		override suspend fun getFavCocktailById(id: Int): FavCocktail { return dao.getFavCocktailById(id) }

@@ -13,6 +13,7 @@ class KoinApp: Application() {
 
 				startKoin {
 						androidContext(this@KoinApp)
+
 						modules(
 								listOf(
 									appModule,

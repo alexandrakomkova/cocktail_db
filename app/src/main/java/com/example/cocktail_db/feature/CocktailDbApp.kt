@@ -38,6 +38,13 @@ fun CocktailDbNavHost(
 														categoryName = it.categoryName
 												)
 										)
+								},
+								onCocktailClick = {
+										navController.navigate(
+												Screen.CocktailDetail.createRoute(
+														cocktailId = it.id.toString()
+												)
+										)
 								}
 						)
 				}
@@ -45,11 +52,15 @@ fun CocktailDbNavHost(
 				composable(
 						route = Screen.CategoryDetail.route,
 						arguments = Screen.CategoryDetail.navArguments
-				) {}
+				) {
+
+				}
 
 				composable(
 						route = Screen.CocktailDetail.route,
 						arguments = Screen.CocktailDetail.navArguments
-				) {}
+				) {
+
+				}
 		}
 }

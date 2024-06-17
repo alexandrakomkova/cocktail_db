@@ -5,15 +5,9 @@ import androidx.room.RoomDatabase
 import com.example.cocktail_db.domain.model.FavCocktail
 
 
-@Database(
-		entities = [FavCocktail::class],
-		version = 1
-)
-
-
+@Database(entities = [FavCocktail::class], version = 1)
 abstract class FavCocktailDatabase: RoomDatabase() {
-		//abstract val cocktailDao: CocktailDao
-		abstract fun favCocktailDao(): CocktailDao
+		abstract fun getFavCocktailDao(): CocktailDao
 
 		companion object {
 				const val DATABASE_NAME = "favourite_cocktails_db"

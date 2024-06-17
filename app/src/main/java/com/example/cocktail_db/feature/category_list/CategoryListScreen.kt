@@ -1,7 +1,9 @@
 package com.example.cocktail_db.feature.category_list
 
 import android.os.Build
+import androidx.activity.compose.ReportDrawn
 import androidx.annotation.RequiresExtension
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,9 +16,12 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.cocktail_db.R
 import com.example.cocktail_db.core.ErrorTextRetryBtn
 import com.example.cocktail_db.domain.model.Category
+import com.example.cocktail_db.ui.theme.cocktailInfoBlack
 import com.example.cocktail_db.ui.theme.cocktailName
 import org.koin.androidx.compose.koinViewModel
 
@@ -39,7 +44,7 @@ fun CategoryListScreen(
 		) {
 
 				if(state.categories.isEmpty()) {
-						state.categories.lastIndex
+						EmptyCategoryList(modifier = modifier)
 				} else {
 						CategoryListScreen(state = state, onCategoryClick = onCategoryClick)
 				}
@@ -86,5 +91,24 @@ fun CategoryListScreen(
 								)
 						}
 				}
+		}
+}
+
+@Composable
+fun EmptyCategoryList(
+		modifier: Modifier = Modifier
+) {
+		ReportDrawn()
+
+		Column(
+				modifier = modifier,
+				horizontalAlignment = Alignment.CenterHorizontally,
+				verticalArrangement = Arrangement.Center
+		) {
+				androidx.compose.material3.Text(
+						text = stringResource(id = R.string.category_list_empty),
+						style = cocktailInfoBlack
+				)
+
 		}
 }
