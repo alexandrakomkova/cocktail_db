@@ -18,18 +18,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cocktail_db.R
 import com.example.cocktail_db.core.ErrorTextRetryBtn
 import com.example.cocktail_db.domain.model.Category
 import com.example.cocktail_db.ui.theme.cocktailInfoBlack
 import com.example.cocktail_db.ui.theme.cocktailName
-import org.koin.androidx.compose.koinViewModel
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun CategoryListScreen(
 		modifier: Modifier = Modifier,
-		viewModel: CategoryListViewModel = koinViewModel(),
+		viewModel: CategoryListViewModel = hiltViewModel(),
 		onCategoryClick: (Category) -> Unit,
 ) {
 		val state = viewModel.state.value

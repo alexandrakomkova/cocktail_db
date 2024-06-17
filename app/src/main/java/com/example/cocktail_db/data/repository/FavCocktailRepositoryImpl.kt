@@ -1,15 +1,13 @@
 package com.example.cocktail_db.data.repository
 
-import com.example.cocktail_db.data.data_source.FavCocktailDatabase
+import com.example.cocktail_db.data.data_source.CocktailDao
 import com.example.cocktail_db.domain.model.FavCocktail
 import com.example.cocktail_db.domain.repository.FavCocktailRepository
-import org.koin.core.component.KoinComponent
+import javax.inject.Inject
 
-class FavCocktailRepositoryImpl(
-		private val database: FavCocktailDatabase
-): FavCocktailRepository, KoinComponent {
-
-		private val dao = database.getFavCocktailDao()
+class FavCocktailRepositoryImpl @Inject constructor(
+		private val dao: CocktailDao
+): FavCocktailRepository {
 		override suspend fun getFavourites(): List<FavCocktail> { return dao.getFavourites() }
 
 		override suspend fun getFavCocktailById(id: Int): FavCocktail { return dao.getFavCocktailById(id) }

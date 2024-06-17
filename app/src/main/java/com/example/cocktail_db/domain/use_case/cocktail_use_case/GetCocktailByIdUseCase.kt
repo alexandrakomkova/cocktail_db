@@ -9,12 +9,12 @@ import com.example.cocktail_db.domain.model.Cocktail
 import com.example.cocktail_db.domain.repository.CocktailDbRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.koin.core.component.KoinComponent
 import java.io.IOException
+import javax.inject.Inject
 
-class GetCocktailByIdUseCase(
+class GetCocktailByIdUseCase @Inject constructor(
 	private val repository: CocktailDbRepository
-): KoinComponent {
+) {
 
 		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 		operator fun invoke(cocktailId: Int): Flow<Resource<List<Cocktail>>> = flow {

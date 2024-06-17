@@ -6,14 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cocktail_db.core.Resource
 import com.example.cocktail_db.domain.use_case.fav_cocktails_use_case.FavCocktailUseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
+import javax.inject.Inject
 
-class FavouriteListViewModel(
+@HiltViewModel
+class FavouriteListViewModel @Inject constructor(
 		private val favCocktailUseCases: FavCocktailUseCases
-): ViewModel(), KoinComponent {
+): ViewModel() {
 
 		private val _state = mutableStateOf(FavouriteListState())
 		val state: State<FavouriteListState> = _state

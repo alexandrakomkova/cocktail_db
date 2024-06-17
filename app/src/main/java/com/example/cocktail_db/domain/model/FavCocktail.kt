@@ -12,6 +12,6 @@ data class FavCocktail(
 		val category: String,
 		val image: String,
 		val cocktailType: String?,
-		val ingredientsList: List<Any?>,
-		val measuresList: List<Any?>
+		//val ingredientsList: List<String?>,
+		//val measuresList: List<String?>
 )

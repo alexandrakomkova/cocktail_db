@@ -11,8 +11,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
 import java.io.IOException
+import javax.inject.Inject
 
-class GetRandomCocktailUseCase(
+class GetRandomCocktailUseCase @Inject constructor(
 		private val repository: CocktailDbRepository
 ): KoinComponent {
 

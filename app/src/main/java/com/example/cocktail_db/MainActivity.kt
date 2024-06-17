@@ -8,7 +8,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresExtension
 import com.example.cocktail_db.feature.CocktailDbApp
 import com.example.cocktail_db.ui.theme.Cocktail_dbTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
 		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)

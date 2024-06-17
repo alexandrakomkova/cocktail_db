@@ -1,7 +1,8 @@
 plugins {
 		alias(libs.plugins.androidApplication)
 		alias(libs.plugins.jetbrainsKotlinAndroid)
-
+		id("kotlin-kapt")
+		alias(libs.plugins.hilt)
 
 }
 
@@ -85,6 +86,11 @@ dependencies {
 		implementation(libs.koin)
 		implementation(libs.koin.compose)
 
+		//hilt
+		implementation(libs.hilt.android)
+		kapt(libs.hilt.android.compiler)
+		implementation(libs.hilt.navigation.compose)
+
 		// coil
 		implementation(libs.coil.compose)
 
@@ -97,5 +103,24 @@ dependencies {
 
 		// Room
 		implementation(libs.androidx.room.runtime)
-		annotationProcessor(libs.androidx.room.compiler)
+		kapt(libs.androidx.room.compiler)
+		implementation(libs.androidx.room.ktx)
+
+		// Testing dependencies
+//		debugImplementation(libs.androidx.monitor)
+//		kspAndroidTest(libs.hilt.android.compiler)
+//		androidTestImplementation(platform(libs.androidx.compose.bom))
+//		androidTestImplementation(libs.androidx.arch.core.testing)
+//		androidTestImplementation(libs.androidx.espresso.contrib)
+//		androidTestImplementation(libs.androidx.espresso.core)
+//		androidTestImplementation(libs.androidx.espresso.intents)
+//		androidTestImplementation(libs.androidx.test.ext.junit)
+//		androidTestImplementation(libs.androidx.test.uiautomator)
+//		androidTestImplementation(libs.androidx.work.testing)
+//		androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+//		androidTestImplementation(libs.guava)
+//		androidTestImplementation(libs.hilt.android.testing)
+//		androidTestImplementation(libs.accessibility.test.framework)
+//		androidTestImplementation(libs.kotlinx.coroutines.test)
+//		testImplementation(libs.junit)
 }

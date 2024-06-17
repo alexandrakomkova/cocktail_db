@@ -7,7 +7,7 @@ import com.example.cocktail_db.domain.model.FavCocktail
 
 @Database(entities = [FavCocktail::class], version = 1)
 abstract class FavCocktailDatabase: RoomDatabase() {
-		abstract fun getFavCocktailDao(): CocktailDao
+		abstract val favCocktailDao: CocktailDao
 
 		companion object {
 				const val DATABASE_NAME = "favourite_cocktails_db"

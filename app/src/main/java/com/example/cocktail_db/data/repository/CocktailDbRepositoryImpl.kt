@@ -6,11 +6,11 @@ import com.example.cocktail_db.data.remote.dto.Drink
 import com.example.cocktail_db.data.remote.dto.category.CategoryDto
 import com.example.cocktail_db.data.remote.dto.cocktails_by_category.ShortInfoCocktailDto
 import com.example.cocktail_db.domain.repository.CocktailDbRepository
-import org.koin.core.component.KoinComponent
+import javax.inject.Inject
 
-class CocktailDbRepositoryImpl(
+class CocktailDbRepositoryImpl @Inject constructor(
 		private val api: CocktailDbApi
-): CocktailDbRepository, KoinComponent {
+): CocktailDbRepository {
 		override suspend fun getCocktailDbRandomCocktail(): List<Drink> {
 				return api.getRandomCocktail().drinks
 		}

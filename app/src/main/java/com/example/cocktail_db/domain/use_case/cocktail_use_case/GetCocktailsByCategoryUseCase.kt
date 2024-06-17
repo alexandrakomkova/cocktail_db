@@ -11,9 +11,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
 import java.io.IOException
+import javax.inject.Inject
 
 
-class GetCocktailsByCategoryUseCase(
+class GetCocktailsByCategoryUseCase @Inject constructor(
 		private val repository: CocktailDbRepository
 ): KoinComponent {
 		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)

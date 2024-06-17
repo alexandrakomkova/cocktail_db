@@ -8,14 +8,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cocktail_db.core.Resource
 import com.example.cocktail_db.domain.use_case.cocktail_use_case.CocktailDbUseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import org.koin.core.component.KoinComponent
+import javax.inject.Inject
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-class CategoryListViewModel(
+@HiltViewModel
+class CategoryListViewModel @Inject constructor(
 		private val cocktailDbUseCases: CocktailDbUseCases
-): ViewModel(), KoinComponent {
+): ViewModel() {
 		private val _state = mutableStateOf(CategoryListState())
 		val state: State<CategoryListState> = _state
 

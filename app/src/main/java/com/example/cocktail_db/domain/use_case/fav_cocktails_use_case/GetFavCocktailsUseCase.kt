@@ -5,11 +5,11 @@ import com.example.cocktail_db.domain.model.FavCocktail
 import com.example.cocktail_db.domain.repository.FavCocktailRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.koin.core.component.KoinComponent
+import javax.inject.Inject
 
-class GetFavCocktailsUseCase(
+class GetFavCocktailsUseCase @Inject constructor(
 		private val repository: FavCocktailRepository
-): KoinComponent {
+) {
 		operator fun invoke(): Flow<Resource<List<FavCocktail>>> = flow {
 
 				try {
