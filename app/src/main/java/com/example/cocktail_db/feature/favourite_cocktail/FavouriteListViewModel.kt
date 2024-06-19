@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cocktail_db.core.Resource
+import com.example.cocktail_db.domain.model.FavCocktail
 import com.example.cocktail_db.domain.use_case.fav_cocktails_use_case.FavCocktailUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +32,18 @@ class FavouriteListViewModel @Inject constructor(
 										is Resource.Success -> { _state.value = FavouriteListState(favourites = result.data ?: emptyList()) }
 								}
 						}
+				}
+		}
+
+		fun addFavCocktail(cocktail: FavCocktail) {
+				viewModelScope.launch(Dispatchers.IO) {
+						favCocktailUseCases.addFavCocktailUseCase(cocktail)
+				}
+		}
+
+		fun deleteFavCocktail(cocktail: FavCocktail) {
+				viewModelScope.launch(Dispatchers.IO) {
+						favCocktailUseCases.deleteFavCocktailUseCase(cocktail)
 				}
 		}
 

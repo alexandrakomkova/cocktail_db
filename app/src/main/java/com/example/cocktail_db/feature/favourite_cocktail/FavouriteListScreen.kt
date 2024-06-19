@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,7 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cocktail_db.R
-import com.example.cocktail_db.core.ErrorTextRetryBtn
+import com.example.cocktail_db.core.components.ErrorTextRetryBtn
+import com.example.cocktail_db.core.components.SmallCocktailCard
 import com.example.cocktail_db.domain.model.Cocktail
 import com.example.cocktail_db.ui.theme.cocktailInfoBlack
 
@@ -61,6 +65,24 @@ fun FavouriteListScreen(
 		state: FavouriteListState,
 		onCocktailClick: (Cocktail) -> Unit
 ) {
+		LazyVerticalStaggeredGrid(
+				columns = StaggeredGridCells.Adaptive(150.dp),
+				modifier = Modifier
+						.fillMaxSize()
+						.padding(top = 15.dp),
+				horizontalArrangement = Arrangement.spacedBy(20.dp),
+				verticalItemSpacing = 20.dp
+		) {
+				items(state.favourites) {cocktail ->
+						SmallCocktailCard(
+								imageUrl = cocktail.image,
+								title = cocktail.name,
+								onCocktailClick = {
+										onCocktailClick
+								}
+						)
+				}
+		}
 
 }
 

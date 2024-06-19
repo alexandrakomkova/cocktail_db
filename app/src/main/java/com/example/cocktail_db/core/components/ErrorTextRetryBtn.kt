@@ -1,4 +1,4 @@
-package com.example.cocktail_db.core
+package com.example.cocktail_db.core.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

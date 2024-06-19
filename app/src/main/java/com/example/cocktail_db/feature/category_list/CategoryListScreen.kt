@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cocktail_db.R
-import com.example.cocktail_db.core.ErrorTextRetryBtn
+import com.example.cocktail_db.core.components.ErrorTextRetryBtn
 import com.example.cocktail_db.domain.model.Category
 import com.example.cocktail_db.ui.theme.cocktailInfoBlack
 import com.example.cocktail_db.ui.theme.cocktailName
@@ -42,18 +42,22 @@ fun CategoryListScreen(
 								vertical = 10.dp
 						)
 		) {
+				if(state.error.isNotBlank()) {
+						ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
+				}
+
+				if(state.isLoading) {
+						CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+				}
 
 				if(state.categories.isEmpty()) {
 						EmptyCategoryList(modifier = modifier)
 				} else {
 						CategoryListScreen(state = state, onCategoryClick = onCategoryClick)
 				}
-				if(state.error.isNotBlank()) {
-						ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
-				}
-				if(state.isLoading) {
-						CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-				}
+
+
+
 		}
 
 }
