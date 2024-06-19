@@ -10,3 +10,14 @@ data class Cocktail(
 		val ingredientsList: List<Any?>,
 		val measuresList: List<Any?>
 )
+
+fun Cocktail.toFavCocktail(): FavCocktail {
+		return FavCocktail(
+				id = id,
+				name = name,
+				glassType = glassType,
+				image = image,
+				category = category,
+				cocktailType = cocktailType
+		)
+}

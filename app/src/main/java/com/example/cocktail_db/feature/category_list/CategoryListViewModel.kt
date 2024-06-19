@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cocktail_db.core.Resource
-import com.example.cocktail_db.domain.use_case.cocktail_use_case.CocktailDbUseCases
+import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.CocktailDbUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

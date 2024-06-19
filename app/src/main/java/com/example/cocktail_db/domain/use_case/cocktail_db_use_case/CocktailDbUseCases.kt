@@ -1,4 +1,4 @@
-package com.example.cocktail_db.domain.use_case.cocktail_use_case
+package com.example.cocktail_db.domain.use_case.cocktail_db_use_case
 
 data class CocktailDbUseCases(
 		val getRandomCocktailUseCase: GetRandomCocktailUseCase, // ok

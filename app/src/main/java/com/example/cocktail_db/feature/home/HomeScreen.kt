@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.cocktail_db.R
 import com.example.cocktail_db.domain.model.Category
 import com.example.cocktail_db.domain.model.Cocktail
+import com.example.cocktail_db.domain.model.FavCocktail
 import com.example.cocktail_db.feature.category_list.CategoryListScreen
 import com.example.cocktail_db.feature.favourite_cocktail.FavouriteListScreen
 import com.example.cocktail_db.ui.theme.Purple40
@@ -47,7 +48,8 @@ fun HomeScreen(
 		modifier: Modifier = Modifier,
 		pages: Array<CocktailDbPage> = CocktailDbPage.entries.toTypedArray(),
 		onCategoryClick: (Category) -> Unit,
-		onCocktailClick: (Cocktail) -> Unit
+		onCocktailClick: (Cocktail) -> Unit,
+		onFavCocktailClick: (FavCocktail) -> Unit
 ) {
 		val pagerState = rememberPagerState(pageCount = { pages.size })
 
@@ -60,7 +62,8 @@ fun HomeScreen(
 						pages = pages,
 						modifier = Modifier.padding(top = contentPadding.calculateTopPadding()),
 						onCategoryClick = onCategoryClick,
-						onCocktailClick = onCocktailClick
+						onCocktailClick = onCocktailClick,
+						onFavCocktailClick = onFavCocktailClick
 				)
 
 		}
@@ -76,7 +79,8 @@ fun HomePagerScreen(
 		pages: Array<CocktailDbPage>,
 		modifier: Modifier = Modifier,
 		onCategoryClick: (Category) -> Unit,
-		onCocktailClick: (Cocktail) -> Unit
+		onCocktailClick: (Cocktail) -> Unit,
+		onFavCocktailClick: (FavCocktail) -> Unit
 ) {
 		Column(modifier) {
 				val coroutineScope = rememberCoroutineScope()
@@ -112,7 +116,7 @@ fun HomePagerScreen(
 								CocktailDbPage.FAVOURITE_LIST -> {
 										FavouriteListScreen(
 												modifier = Modifier.fillMaxSize(),
-												onCocktailClick = onCocktailClick
+												onFavCocktailClick = onFavCocktailClick
 										)
 								}
 								CocktailDbPage.CATEGORY_LIST -> {

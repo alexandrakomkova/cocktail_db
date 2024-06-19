@@ -1,14 +1,14 @@
 package com.example.cocktail_db.feature
 
-import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresExtension
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.cocktail_db.feature.category_detail.CategoryDetailScreen
+import com.example.cocktail_db.feature.cocktail_detail.CocktailDetailScreen
 import com.example.cocktail_db.feature.home.HomeScreen
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
@@ -25,7 +25,7 @@ fun CocktailDbApp() {
 fun CocktailDbNavHost(
 		navController: NavHostController
 ) {
-		val activity = (LocalContext.current as Activity)
+
 		NavHost(
 				navController = navController,
 				startDestination = Screen.Home.route) {
@@ -45,6 +45,13 @@ fun CocktailDbNavHost(
 														cocktailId = it.id.toString()
 												)
 										)
+								},
+								onFavCocktailClick = {
+										navController.navigate(
+												Screen.CocktailDetail.createRoute(
+														cocktailId = it.id.toString()
+												)
+										)
 								}
 						)
 				}
@@ -53,14 +60,26 @@ fun CocktailDbNavHost(
 						route = Screen.CategoryDetail.route,
 						arguments = Screen.CategoryDetail.navArguments
 				) {
-
+						CategoryDetailScreen(
+								onCocktailClick = {
+										navController.navigate(
+												Screen.CocktailDetail.createRoute(
+														cocktailId = it.id.toString()
+												)
+										)
+								}
+						)
 				}
 
 				composable(
 						route = Screen.CocktailDetail.route,
 						arguments = Screen.CocktailDetail.navArguments
 				) {
-
+						CocktailDetailScreen(
+								onUpClick = {
+										navController.navigateUp()
+								}
+						)
 				}
 		}
 }

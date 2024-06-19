@@ -19,7 +19,7 @@ interface CocktailDbApi {
 		suspend fun getCocktailsByCategoryName(@Query("c") categoryName: String): CocktailsByCategoryDto
 
 		@GET("/api/json/v1/1/lookup.php?i={cocktailId}")
-		suspend fun getCocktailById(@Path("cocktailId") cocktailId: Int): CocktailDto
+		suspend fun getCocktailById(@Path("cocktailId") cocktailId: String): CocktailDto
 
 
 }

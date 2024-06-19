@@ -9,11 +9,11 @@ import com.example.cocktail_db.data.repository.CocktailDbRepositoryImpl
 import com.example.cocktail_db.data.repository.FavCocktailRepositoryImpl
 import com.example.cocktail_db.domain.repository.CocktailDbRepository
 import com.example.cocktail_db.domain.repository.FavCocktailRepository
-import com.example.cocktail_db.domain.use_case.cocktail_use_case.CocktailDbUseCases
-import com.example.cocktail_db.domain.use_case.cocktail_use_case.GetCategoriesUseCase
-import com.example.cocktail_db.domain.use_case.cocktail_use_case.GetCocktailByIdUseCase
-import com.example.cocktail_db.domain.use_case.cocktail_use_case.GetCocktailsByCategoryUseCase
-import com.example.cocktail_db.domain.use_case.cocktail_use_case.GetRandomCocktailUseCase
+import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.CocktailDbUseCases
+import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.GetCategoriesUseCase
+import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.GetCocktailByIdUseCase
+import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.GetCocktailsByCategoryUseCase
+import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.GetRandomCocktailUseCase
 import com.example.cocktail_db.domain.use_case.fav_cocktails_use_case.AddFavCocktailUseCase
 import com.example.cocktail_db.domain.use_case.fav_cocktails_use_case.DeleteFavCocktailUseCase
 import com.example.cocktail_db.domain.use_case.fav_cocktails_use_case.FavCocktailUseCases

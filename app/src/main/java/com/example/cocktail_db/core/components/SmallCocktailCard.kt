@@ -22,15 +22,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.cocktail_db.R
-import com.example.cocktail_db.domain.model.Cocktail
 import com.example.cocktail_db.ui.theme.cocktailInfoWhite
 
 @Composable
 fun SmallCocktailCard(
+		modifier: Modifier = Modifier,
 		imageUrl: String = "",
 		title: String = "Pina colada",
-		modifier: Modifier = Modifier,
-		onCocktailClick: (Cocktail) -> Unit
+		onItemClick: () -> Unit
 ) {
 
 		val checked = remember { mutableStateOf(false) }

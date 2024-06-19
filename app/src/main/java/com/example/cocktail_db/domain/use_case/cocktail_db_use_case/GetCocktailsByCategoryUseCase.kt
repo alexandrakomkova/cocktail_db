@@ -1,4 +1,4 @@
-package com.example.cocktail_db.domain.use_case.cocktail_use_case
+package com.example.cocktail_db.domain.use_case.cocktail_db_use_case
 
 import android.net.http.HttpException
 import android.os.Build

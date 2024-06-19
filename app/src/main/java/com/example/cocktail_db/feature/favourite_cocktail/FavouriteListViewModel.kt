@@ -21,7 +21,24 @@ class FavouriteListViewModel @Inject constructor(
 		private val _state = mutableStateOf(FavouriteListState())
 		val state: State<FavouriteListState> = _state
 
-		init { getFavourites() }
+
+
+		init {
+
+				getFavourites()
+				_state.value = FavouriteListState(
+						favourites = listOf(
+								FavCocktail(
+										id = 1,
+										name = "Margarita",
+										glassType = "short",
+										category = "Shots",
+										image = "",
+										cocktailType = null
+								)
+						)
+				)
+		}
 
 		private fun getFavourites() {
 				viewModelScope.launch(Dispatchers.IO) {
