@@ -1,6 +1,7 @@
 package com.example.cocktail_db.core.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,20 +23,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.cocktail_db.R
+import com.example.cocktail_db.domain.model.Cocktail
 import com.example.cocktail_db.ui.theme.cocktailInfoWhite
 
 @Composable
 fun SmallCocktailCard(
 		modifier: Modifier = Modifier,
-		imageUrl: String = "",
-		title: String = "Pina colada",
-		onItemClick: () -> Unit
+		cocktail: Cocktail,
+		onItemClick: (Cocktail) -> Unit
 ) {
 
 		val checked = remember { mutableStateOf(false) }
 
 		Card(
-				modifier = modifier.fillMaxWidth(),
+				modifier = modifier.fillMaxWidth().clickable { onItemClick(cocktail) },
 				shape = RoundedCornerShape(15.dp),
 				elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
 		) {
@@ -44,8 +45,8 @@ fun SmallCocktailCard(
 				) {
 
 						AsyncCocktailImage(
-								imageUrl = imageUrl,
-								contentDesc = title,
+								imageUrl = cocktail.image,
+								contentDesc = cocktail.name,
 								modifier = Modifier.fillMaxSize())
 
 						Box(
@@ -80,7 +81,7 @@ fun SmallCocktailCard(
 								contentAlignment = Alignment.BottomStart
 						) {
 								Text(
-										text = title,
+										text = cocktail.name,
 										style = cocktailInfoWhite
 								)
 

@@ -24,6 +24,7 @@ class CategoryListViewModel @Inject constructor(
 		init { getCategories() }
 
 		private fun getCategories() {
+
 				cocktailDbUseCases.getCategoriesUseCase().onEach { result ->
 						when(result) {
 								is Resource.Error -> { _state.value = CategoryListState(error = result.message ?: "An unexpected error occurred") }
@@ -31,6 +32,7 @@ class CategoryListViewModel @Inject constructor(
 								is Resource.Success -> { _state.value = CategoryListState(categories = result.data ?: emptyList()) }
 						}
 				}.launchIn(viewModelScope)
+
 		}
 
 		fun refresh() {

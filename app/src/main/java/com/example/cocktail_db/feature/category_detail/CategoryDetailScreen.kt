@@ -1,6 +1,7 @@
 package com.example.cocktail_db.feature.category_detail
 
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.ReportDrawn
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.Arrangement
@@ -45,6 +46,9 @@ fun CategoryDetailScreen(
 								vertical = 10.dp
 						)
 		) {
+
+
+				Log.d("CategoryDetailScreen", state.shortInfoCocktails.toString())
 				if(state.error.isNotBlank()) {
 						ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
 				}
@@ -95,8 +99,7 @@ fun CategoryDetailScreen(
 				) {
 						items(state.shortInfoCocktails) {cocktail ->
 								SmallCocktailCard(
-										imageUrl = cocktail.image,
-										title = cocktail.name,
+										cocktail = cocktail.toCocktail(),
 										onItemClick = { onCocktailClick(cocktail.toCocktail()) }
 								)
 						}

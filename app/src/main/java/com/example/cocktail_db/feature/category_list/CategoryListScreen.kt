@@ -1,6 +1,7 @@
 package com.example.cocktail_db.feature.category_list
 
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.ReportDrawn
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.Arrangement
@@ -42,22 +43,18 @@ fun CategoryListScreen(
 								vertical = 10.dp
 						)
 		) {
+				Log.d("CategoryListScreen", state.categories.toString())
 				if(state.error.isNotBlank()) {
 						ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
 				}
-
 				if(state.isLoading) {
 						CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 				}
-
 				if(state.categories.isEmpty()) {
 						EmptyCategoryList(modifier = modifier)
 				} else {
 						CategoryListScreen(state = state, onCategoryClick = onCategoryClick)
 				}
-
-
-
 		}
 
 }

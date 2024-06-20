@@ -15,3 +15,16 @@ data class FavCocktail(
 		//val ingredientsList: List<String?>,
 		//val measuresList: List<String?>
 )
+
+fun FavCocktail.toCocktail(): Cocktail {
+		return Cocktail(
+				id = id,
+				name = name,
+				glassType = glassType,
+				image = image,
+				category = category,
+				cocktailType = cocktailType,
+				ingredientsList = emptyList(),
+				measuresList = emptyList()
+		)
+}

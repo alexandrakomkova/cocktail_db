@@ -21,6 +21,7 @@ import com.example.cocktail_db.R
 import com.example.cocktail_db.core.components.ErrorTextRetryBtn
 import com.example.cocktail_db.core.components.SmallCocktailCard
 import com.example.cocktail_db.domain.model.FavCocktail
+import com.example.cocktail_db.domain.model.toCocktail
 import com.example.cocktail_db.ui.theme.cocktailInfoBlack
 
 @Composable
@@ -75,8 +76,7 @@ fun FavouriteListScreen(
 		) {
 				items(state.favourites) {cocktail ->
 						SmallCocktailCard(
-								imageUrl = cocktail.image,
-								title = cocktail.name,
+								cocktail = cocktail.toCocktail(),
 								onItemClick = { onFavCocktailClick(cocktail) }
 						)
 				}

@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @HiltViewModel
 class CategoryDetailViewModel @Inject constructor(
 		savedStateHandle: SavedStateHandle,
@@ -24,7 +25,9 @@ class CategoryDetailViewModel @Inject constructor(
 
 		val categoryName: String = savedStateHandle.get<String>(CATEGORY_NAME_SAVED_STATE_KEY)!!
 
-		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+		init {
+				getCocktailsByCategory()
+		}
 		private fun getCocktailsByCategory() {
 				cocktailDbUseCases.getCocktailsByCategoryUseCase(categoryName).onEach { result ->
 						when(result) {
@@ -36,7 +39,6 @@ class CategoryDetailViewModel @Inject constructor(
 				}.launchIn(viewModelScope)
 		}
 
-		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 		fun refresh() {
 				getCocktailsByCategory()
 		}

@@ -46,7 +46,6 @@ import com.example.cocktail_db.ui.theme.cocktailInfoGrey
 import com.example.cocktail_db.ui.theme.cocktailName
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-
 @Composable
 fun CocktailDetailScreen(
 		modifier: Modifier = Modifier,
@@ -63,18 +62,18 @@ fun CocktailDetailScreen(
 				horizontalAlignment = Alignment.CenterHorizontally
 		) {
 
-				if (state.cocktails.isEmpty()) {
-						EmptyCocktailDetail(modifier = modifier)
-				}  else {
-						CocktailCard(state.cocktails[0])
-				}
-
 				if(state.error.isNotBlank()) {
 						ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
 				}
 
 				if(state.isLoading) {
 						CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+				}
+				
+				if (state.cocktails.isEmpty()) {
+						EmptyCocktailDetail(modifier = modifier)
+				}  else {
+						CocktailCard(cocktail = state.cocktails[0], onUpClick = onUpClick)
 				}
 		}
 
@@ -83,9 +82,10 @@ fun CocktailDetailScreen(
 
 @Composable
 fun CocktailCard(
-		cocktail: Cocktail
+		cocktail: Cocktail,
+		onUpClick: () -> Unit
 ) {
-//img
+
 		Box {
 				AsyncCocktailImage(
 						imageUrl = cocktail.image,
@@ -96,7 +96,7 @@ fun CocktailCard(
 				)
 		}
 
-		// all info
+
 		Box(
 				modifier = Modifier
 						.fillMaxWidth()

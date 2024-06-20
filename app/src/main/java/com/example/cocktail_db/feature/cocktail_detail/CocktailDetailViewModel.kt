@@ -1,6 +1,7 @@
 package com.example.cocktail_db.feature.cocktail_detail
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresExtension
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -13,29 +14,43 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @HiltViewModel
 class CocktailDetailViewModel @Inject constructor(
 		private val cocktailDbUseCases: CocktailDbUseCases,
-		private val savedStateHandle: SavedStateHandle
+		savedStateHandle: SavedStateHandle
 ): ViewModel() {
 		private val _state = mutableStateOf(CocktailDetailState())
 		val state: State<CocktailDetailState> = _state
 
 		private val cocktailId: String = savedStateHandle.get<String>(COCKTAIL_ID_SAVED_STATE_KEY)!!
 
-		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+		init {
+				Log.d("CocktailDetailViewModel", cocktailId)
+				getCocktailById()
+		}
+
 		private fun getCocktailById() {
 				cocktailDbUseCases.getCocktailByIdUseCase(cocktailId).onEach { result ->
-						when(result) {
-								is Resource.Loading -> { _state.value = CocktailDetailState(isLoading = true) }
-								is Resource.Success -> { _state.value = CocktailDetailState(cocktails = result.data ?: emptyList()) }
-								is Resource.Error -> { _state.value = CocktailDetailState(error = result.message ?: "An unexpected error occurred")
+						when (result) {
+								is Resource.Loading -> {
+										_state.value = CocktailDetailState(isLoading = true)
+								}
+
+								is Resource.Success -> {
+										_state.value = CocktailDetailState(cocktails = result.data ?: emptyList())
+								}
+
+								is Resource.Error -> {
+										_state.value = CocktailDetailState(
+												error = result.message ?: "An unexpected error occurred"
+										)
 								}
 						}
 				}.launchIn(viewModelScope)
 		}
 
-		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 		fun refresh() {
 				getCocktailById()
 		}

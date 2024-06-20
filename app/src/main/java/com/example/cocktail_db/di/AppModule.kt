@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.example.cocktail_db.core.Constants
 import com.example.cocktail_db.data.data_source.FavCocktailDatabase
+import com.example.cocktail_db.data.remote.AuthInterceptor
 import com.example.cocktail_db.data.remote.CocktailDbApi
 import com.example.cocktail_db.data.repository.CocktailDbRepositoryImpl
 import com.example.cocktail_db.data.repository.FavCocktailRepositoryImpl
@@ -23,6 +24,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -60,10 +62,10 @@ object AppModule {
 
 		@Provides
 		@Singleton
-		fun provideCocktailDbApi(): CocktailDbApi {
+		fun provideCocktailDbApi(okHttpClient: OkHttpClient): CocktailDbApi {
 				return Retrofit.Builder()
 						.baseUrl(Constants.API_COCKTAIL_DB_URL)
-						// .client(okHttpClient)
+						.client(okHttpClient)
 						.addConverterFactory(MoshiConverterFactory.create())
 						.build()
 						.create(CocktailDbApi::class.java)
@@ -73,6 +75,12 @@ object AppModule {
 		@Singleton
 		fun provideCocktailDbRepository(api: CocktailDbApi): CocktailDbRepository {
 				return CocktailDbRepositoryImpl(api)
+		}
+
+		@Provides
+		@Singleton
+		fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+				return OkHttpClient().newBuilder().addInterceptor(authInterceptor).build()
 		}
 
 		@Provides
