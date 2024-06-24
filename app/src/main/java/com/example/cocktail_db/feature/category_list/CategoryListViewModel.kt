@@ -9,8 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.cocktail_db.core.Resource
 import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.CocktailDbUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
@@ -20,18 +21,20 @@ class CategoryListViewModel @Inject constructor(
 ): ViewModel() {
 		private val _state = mutableStateOf(CategoryListState())
 		val state: State<CategoryListState> = _state
-
 		init { getCategories() }
-
 		private fun getCategories() {
 
-				cocktailDbUseCases.getCategoriesUseCase().onEach { result ->
-						when(result) {
-								is Resource.Error -> { _state.value = CategoryListState(error = result.message ?: "An unexpected error occurred") }
-								is Resource.Loading -> { _state.value = CategoryListState(isLoading = true) }
-								is Resource.Success -> { _state.value = CategoryListState(categories = result.data ?: emptyList()) }
+				viewModelScope.launch() {
+						cocktailDbUseCases.getCategoriesUseCase()
+								.flowOn(Dispatchers.IO)
+								.collect { result ->
+										when (result) {
+												is Resource.Error -> { _state.value = CategoryListState(isLoading = false, error = result.message ?: "An unexpected error occurred")}
+												is Resource.Loading -> { _state.value = CategoryListState(isLoading = true) }
+												is Resource.Success -> { _state.value = CategoryListState(isLoading = false, categories = result.data ?: emptyList()) }
+								}
 						}
-				}.launchIn(viewModelScope)
+				}
 
 		}
 

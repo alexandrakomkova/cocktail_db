@@ -49,21 +49,21 @@ fun CategoryDetailScreen(
 
 
 				Log.d("CategoryDetailScreen", state.shortInfoCocktails.toString())
-				if(state.error.isNotBlank()) {
-						ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
+
+				when {
+						state.isLoading -> {
+								CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+						}
+						state.error.isNotBlank() -> {
+								ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
+						}
+						state.shortInfoCocktails.isEmpty() -> {
+								EmptyCategoryDetailList(modifier = modifier)
+						}
+						else -> {
+								CategoryDetailScreen(modifier = modifier, state = state, onCocktailClick = onCocktailClick)
+						}
 				}
-
-				if(state.isLoading) {
-						CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-				}
-
-				if(state.shortInfoCocktails.isEmpty()) {
-						EmptyCategoryDetailList(modifier = modifier)
-				} else {
-						CategoryDetailScreen(state = state, onCocktailClick = onCocktailClick)
-				}
-
-
 
 		}
 
@@ -72,11 +72,12 @@ fun CategoryDetailScreen(
 
 @Composable
 fun CategoryDetailScreen(
+		modifier: Modifier = Modifier,
 		state: CategoryDetailState,
 		onCocktailClick: (Cocktail) -> Unit
 ) {
 		Column(
-				modifier = Modifier
+				modifier = modifier
 						.fillMaxSize()
 						.padding(20.dp),
 				horizontalAlignment = Alignment.CenterHorizontally,

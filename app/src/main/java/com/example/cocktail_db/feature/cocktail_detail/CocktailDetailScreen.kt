@@ -61,19 +61,19 @@ fun CocktailDetailScreen(
 				verticalArrangement = Arrangement.Center,
 				horizontalAlignment = Alignment.CenterHorizontally
 		) {
-
-				if(state.error.isNotBlank()) {
-						ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
-				}
-
-				if(state.isLoading) {
-						CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-				}
-				
-				if (state.cocktails.isEmpty()) {
-						EmptyCocktailDetail(modifier = modifier)
-				}  else {
-						CocktailCard(cocktail = state.cocktails[0], onUpClick = onUpClick)
+				when {
+						state.isLoading -> {
+								CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+						}
+						state.error.isNotBlank() -> {
+								ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
+						}
+						state.cocktails.isEmpty() -> {
+								EmptyCocktailDetail(modifier = modifier)
+						}
+						else -> {
+								CocktailCard(cocktail = state.cocktails[0], onUpClick = onUpClick)
+						}
 				}
 		}
 

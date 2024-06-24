@@ -44,16 +44,20 @@ fun CategoryListScreen(
 						)
 		) {
 				Log.d("CategoryListScreen", state.categories.toString())
-				if(state.error.isNotBlank()) {
-						ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
-				}
-				if(state.isLoading) {
-						CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-				}
-				if(state.categories.isEmpty()) {
-						EmptyCategoryList(modifier = modifier)
-				} else {
-						CategoryListScreen(state = state, onCategoryClick = onCategoryClick)
+
+				when {
+						state.isLoading -> {
+								CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+						}
+						state.error.isNotBlank() -> {
+								ErrorTextRetryBtn(errorText = state.error) { viewModel.refresh() }
+						}
+						state.categories.isEmpty() -> {
+								EmptyCategoryList(modifier = modifier)
+						}
+						else -> {
+								CategoryListScreen(state = state, onCategoryClick = onCategoryClick)
+						}
 				}
 		}
 

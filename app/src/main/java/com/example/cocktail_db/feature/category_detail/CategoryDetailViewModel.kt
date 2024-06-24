@@ -10,8 +10,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.cocktail_db.core.Resource
 import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.CocktailDbUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
@@ -28,15 +29,25 @@ class CategoryDetailViewModel @Inject constructor(
 		init {
 				getCocktailsByCategory()
 		}
+
 		private fun getCocktailsByCategory() {
-				cocktailDbUseCases.getCocktailsByCategoryUseCase(categoryName).onEach { result ->
-						when(result) {
-								is Resource.Loading -> { _state.value = CategoryDetailState(isLoading = true) }
-								is Resource.Success -> { _state.value = CategoryDetailState(categoryName = categoryName, shortInfoCocktails = result.data ?: emptyList()) }
-								is Resource.Error -> { _state.value = CategoryDetailState(error = result.message ?: "An unexpected error occurred")
+				viewModelScope.launch() {
+						cocktailDbUseCases.getCocktailsByCategoryUseCase(categoryName)
+								.flowOn(Dispatchers.IO)
+								.collect { result ->
+										when (result) {
+												is Resource.Error -> {
+														_state.value = CategoryDetailState(error = result.message ?: "An unexpected error occurred")
+												}
+												is Resource.Loading -> { _state.value = CategoryDetailState(isLoading = true) }
+												is Resource.Success -> { _state.value = CategoryDetailState(
+														isLoading = false,
+														categoryName = categoryName,
+														shortInfoCocktails = result.data ?: emptyList()
+												) }
+										}
 								}
-						}
-				}.launchIn(viewModelScope)
+				}
 		}
 
 		fun refresh() {
