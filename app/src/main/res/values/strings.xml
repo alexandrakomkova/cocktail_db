@@ -9,4 +9,8 @@
     <string name="category_list_empty">Category list is empty</string>
     <string name="cocktail_detail_empty">Cocktail details are empty</string>
     <string name="category_detail_empty">There are no cocktails in this category</string>
+
+    <string name="arrow_back">icn_back</string>
+
+
 </resources>

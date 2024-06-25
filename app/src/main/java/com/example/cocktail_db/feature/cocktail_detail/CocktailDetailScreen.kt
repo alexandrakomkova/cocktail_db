@@ -3,6 +3,7 @@ package com.example.cocktail_db.feature.cocktail_detail
 import android.os.Build
 import androidx.activity.compose.ReportDrawn
 import androidx.annotation.RequiresExtension
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,17 +13,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cocktail_db.R
@@ -72,16 +79,15 @@ fun CocktailDetailScreen(
 								EmptyCocktailDetail(modifier = modifier)
 						}
 						else -> {
-								CocktailCard(cocktail = state.cocktails[0], onUpClick = onUpClick)
+								CocktailCard(modifier = modifier, cocktail = state.cocktails[0], onUpClick = onUpClick)
 						}
 				}
 		}
-
-
 }
 
 @Composable
 fun CocktailCard(
+		modifier: Modifier = Modifier,
 		cocktail: Cocktail,
 		onUpClick: () -> Unit
 ) {
@@ -90,23 +96,28 @@ fun CocktailCard(
 				AsyncCocktailImage(
 						imageUrl = cocktail.image,
 						contentDesc = cocktail.name,
-						modifier = Modifier
+						modifier = modifier
 								.fillMaxWidth()
 								.clip(MaterialTheme.shapes.medium)
+				)
+
+				CocktailDetailToolbar(
+						modifier = modifier,
+						onUpClick = onUpClick
 				)
 		}
 
 
 		Box(
-				modifier = Modifier
-						.fillMaxWidth()
+				modifier = modifier
+						.fillMaxSize()
 						.padding(top = 15.dp)
 		) {
 				Column(
-						modifier = Modifier.padding(horizontal = 15.dp)
+						modifier = modifier.padding(horizontal = 15.dp)
 				) {
 
-						FavouriteButton()
+
 						// id + name
 						OverlayText(cocktail.id.toString(), cocktail.name)
 
@@ -121,29 +132,28 @@ fun CocktailCard(
 								text = "Category: ${cocktail.category}",
 								style = cocktailInfoBlack
 						)
-						HorizontalDivider(modifier = Modifier
-								.width(15.dp)
-								.padding(vertical = 10.dp), thickness = 1.dp, color = Color.Gray)
+						HorizontalDivider(
+								modifier = Modifier
+										.width(15.dp)
+										.padding(vertical = 10.dp), thickness = 1.dp, color = Color.Gray
+						)
 						Text(
 								text = "Glass type: ${cocktail.glassType}",
 								style = cocktailInfoBlack
 						)
-						HorizontalDivider(modifier = Modifier
-								.width(15.dp)
-								.padding(vertical = 10.dp), thickness = 1.dp, color = Color.Gray)
-						Text(
-								text = "Glass type: ${cocktail.glassType}",
-								style = cocktailInfoBlack
+						HorizontalDivider(
+								modifier = Modifier
+										.width(15.dp)
+										.padding(vertical = 10.dp), thickness = 1.dp, color = Color.Gray
 						)
-						HorizontalDivider(modifier = Modifier
-								.width(15.dp)
-								.padding(vertical = 10.dp), thickness = 1.dp, color = Color.Gray)
 						Text(
 								text = "Ingredients:",
 								style = cocktailInfoBlack
 						)
 						IngredientsList(cocktail = cocktail)
 				}
+
+
 		}
 }
 
@@ -242,6 +252,83 @@ fun EmptyCocktailDetail(
 						style = cocktailInfoBlack
 				)
 
+				CocktailDetailToolbar(
+						modifier = modifier,
+						onUpClick = {}
+				)
+
 		}
 
+}
+
+@Composable
+fun CocktailDetailToolbar(
+		modifier: Modifier = Modifier,
+		onUpClick: () -> Unit
+) {
+
+		val checked = remember { mutableStateOf(false) }
+
+		Row(
+				modifier = modifier
+						.fillMaxSize()
+						.systemBarsPadding()
+						.padding(vertical = 15.dp, horizontal = 10.dp),
+				horizontalArrangement = Arrangement.SpaceBetween
+		) {
+				val iconModifier = Modifier
+						.sizeIn(
+								maxWidth = 32.dp,
+								maxHeight = 32.dp
+						)
+						.background(
+								color = MaterialTheme.colorScheme.surface,
+								shape = CircleShape
+						)
+
+				IconButton(
+						onClick = onUpClick,
+						modifier = Modifier
+								.padding(start =12.dp)
+								.then(iconModifier)
+				) {
+						Icon(
+								Icons.AutoMirrored.Filled.ArrowBack,
+								contentDescription = stringResource(id = R.string.arrow_back)
+						)
+				}
+
+				IconToggleButton(
+						checked = checked.value,
+						onCheckedChange = { checked.value = it },
+						modifier = Modifier
+								.padding(end =12.dp)
+								.then(iconModifier)
+				) {
+						Icon(
+								if (checked.value) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+								contentDescription = "favourite_btn",
+								tint = if (checked.value) Color.Red else Color.Black,
+						)
+				}
+		}
+
+}
+
+@Preview
+@Composable
+fun CocktailCardPreview() {
+		CocktailCard(
+				cocktail = Cocktail(
+						id = 15346,
+						name = "155 Belmont",
+						glassType = "White wine glass",
+						category = "Cocktail",
+						cocktailType = "Alcoholic",
+						ingredientsList = listOf("Dark rum", "Light rum", "Vodka", "Orange juice"),
+						measuresList = listOf("1 shot", "2 shots ", "1 shot ", "1 shot "),
+						image = "https://www.thecocktaildb.com//images//media//drink//yqvvqs1475667388.jpg"
+				),
+				onUpClick = {}
+		)
 }
