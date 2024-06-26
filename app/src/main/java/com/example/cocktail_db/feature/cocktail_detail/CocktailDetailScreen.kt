@@ -117,8 +117,6 @@ fun CocktailCard(
 						modifier = modifier.padding(horizontal = 15.dp)
 				) {
 
-
-						// id + name
 						OverlayText(cocktail.id.toString(), cocktail.name)
 
 						cocktail.cocktailType?.let {
