@@ -1,7 +1,6 @@
 package com.example.cocktail_db.feature
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresExtension
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -36,7 +35,7 @@ fun CocktailDbNavHost(
 								onCategoryClick = {
 										navController.navigate(
 												Screen.CategoryDetail.createRoute(
-														categoryName = it.categoryName
+														categoryName = it.categoryName.replace("/", "%2F")
 												)
 										)
 								},
@@ -63,13 +62,13 @@ fun CocktailDbNavHost(
 				) {
 						CategoryDetailScreen(
 								onCocktailClick = {
-										Log.d("onCocktailClick", it.id.toString())
 										navController.navigate(
 												Screen.CocktailDetail.createRoute(
 														cocktailId = it.id.toString()
 												)
 										)
-								}
+								},
+								onUpClick = { navController.navigateUp() }
 						)
 				}
 
