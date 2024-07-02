@@ -9,4 +9,5 @@ interface CocktailDbRepository {
 		suspend fun getCategories(): List<CategoryDto>
 		suspend fun getCocktailsByCategoryName(categoryName: String): List<ShortInfoCocktailDto>
 		suspend fun getCocktailById(cocktailId: String): List<Drink>
+		suspend fun getCocktailByName(cocktailName: String): List<Drink>
 }

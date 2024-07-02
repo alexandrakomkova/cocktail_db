@@ -1,0 +1,33 @@
+package com.example.cocktail_db.domain.use_case.cocktail_db_use_case
+
+import android.net.http.HttpException
+import android.os.Build
+import androidx.annotation.RequiresExtension
+import com.example.cocktail_db.core.Resource
+import com.example.cocktail_db.data.remote.dto.toCocktail
+import com.example.cocktail_db.domain.model.Cocktail
+import com.example.cocktail_db.domain.repository.CocktailDbRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import java.io.IOException
+import javax.inject.Inject
+
+class GetCocktailByNameUseCase @Inject constructor(
+		private val repository: CocktailDbRepository
+) {
+		@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+		operator fun invoke(cocktailName: String): Flow<Resource<List<Cocktail>>> = flow {
+
+				try {
+						emit(Resource.Loading())
+						val cocktail = repository.getCocktailByName(cocktailName).map { it.toCocktail() }
+						emit(Resource.Success(cocktail))
+				}
+				catch (e: HttpException) {
+						emit(Resource.Error(message = e.localizedMessage ?: "An unexpected HTTP error occurred"))
+				}
+				catch (e: IOException) {
+						emit(Resource.Error(message = "Couldn't reach server. Check your internet connection"))
+				}
+		}
+}

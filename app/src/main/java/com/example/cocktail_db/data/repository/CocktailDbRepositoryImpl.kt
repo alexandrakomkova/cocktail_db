@@ -26,4 +26,8 @@ class CocktailDbRepositoryImpl @Inject constructor(
 		override suspend fun getCocktailById(cocktailId: String): List<Drink> {
 				return api.getCocktailById(cocktailId).drinks
 		}
+
+		override suspend fun getCocktailByName(cocktailName: String): List<Drink> {
+				return api.getCocktailByName(cocktailName).drinks
+		}
 }

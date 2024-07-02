@@ -11,7 +11,6 @@ import com.example.cocktail_db.domain.model.FavCocktail
 interface CocktailDao {
 		@Query("select * from favcocktail")
 		suspend fun getFavourites(): List<FavCocktail>
-
 		@Query("select * from favcocktail where id = :id")
 		suspend fun getFavCocktailById(id: Int): FavCocktail
 		@Insert(onConflict = REPLACE)

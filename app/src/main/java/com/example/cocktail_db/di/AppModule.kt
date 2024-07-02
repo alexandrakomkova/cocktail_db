@@ -13,6 +13,7 @@ import com.example.cocktail_db.domain.repository.FavCocktailRepository
 import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.CocktailDbUseCases
 import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.GetCategoriesUseCase
 import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.GetCocktailByIdUseCase
+import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.GetCocktailByNameUseCase
 import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.GetCocktailsByCategoryUseCase
 import com.example.cocktail_db.domain.use_case.cocktail_db_use_case.GetRandomCocktailUseCase
 import com.example.cocktail_db.domain.use_case.fav_cocktails_use_case.AddFavCocktailUseCase
@@ -90,7 +91,8 @@ object AppModule {
 						getCocktailsByCategoryUseCase = GetCocktailsByCategoryUseCase(repository),
 						getRandomCocktailUseCase = GetRandomCocktailUseCase(repository),
 						getCategoriesUseCase = GetCategoriesUseCase(repository),
-						getCocktailByIdUseCase = GetCocktailByIdUseCase(repository)
+						getCocktailByIdUseCase = GetCocktailByIdUseCase(repository),
+						getCocktailByNameUseCase = GetCocktailByNameUseCase(repository)
 				)
 		}
 
